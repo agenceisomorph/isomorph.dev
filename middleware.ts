@@ -8,8 +8,10 @@ import { routing } from "./src/i18n/routing";
 export default createMiddleware(routing);
 
 export const config = {
-  // Exclure les routes API, fichiers statiques et métadonnées Next.js
+  // Matcher qui inclut explicitement "/" et toutes les routes non-statiques
   matcher: [
+    "/",
+    "/(fr|en)/:path*",
     "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)",
   ],
 };
