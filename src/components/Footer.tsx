@@ -200,6 +200,16 @@ export default function Footer() {
                   contact@isomorph.fr
                 </a>
               </li>
+              {/* Lien admin — discret, en bas de colonne */}
+              <li>
+                <Link
+                  href="/admin/licenses"
+                  className="text-xs text-zinc-700 hover:text-zinc-500 transition-colors duration-150"
+                  aria-label="Accès administration licences (réservé à ISOMORPH)"
+                >
+                  Admin
+                </Link>
+              </li>
             </ul>
           </nav>
         </div>

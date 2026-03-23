@@ -35,9 +35,10 @@ export async function generateMetadata({
   return {
     alternates: {
       // Balises hreflang FR/EN — SEO bilingue
+      // En mode as-needed : pas de préfixe pour la locale par défaut (en)
       languages: {
         fr: `https://isomorph.dev/fr`,
-        en: `https://isomorph.dev/en`,
+        en: `https://isomorph.dev`,
       },
     },
     other: {

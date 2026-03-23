@@ -271,6 +271,29 @@
       "github": "github.com/isomorph-agency"
     }
   },
+  "checkout": {
+    "success": {
+      "title": "Payment confirmed!",
+      "description": "Your ISOMORPH license is ready. Keep your key in a safe place.",
+      "descriptionWithEmail": "Your ISOMORPH license has been sent to {email}. Keep your key in a safe place.",
+      "licenseKeyLabel": "Your license key",
+      "copyKey": "Copy license key",
+      "copied": "Key copied!",
+      "saveKeyWarning": "Save this key — it will not be shown again after closing this page.",
+      "licenseGenerating": "Your license is being generated…",
+      "licenseGeneratingHint": "If it doesn't appear in a few seconds, check your email or contact support.",
+      "installTitle": "How to activate your license",
+      "installStep1": "Install the plugin via npm: npm install strapi-plugin-comments",
+      "installStep2": "Add your license key to the plugin configuration (config/plugins.js)",
+      "installStep3": "Restart Strapi — your license will be verified automatically at startup.",
+      "readDocs": "Read the docs",
+      "backToPlugin": "Back to plugin",
+      "errorTitle": "Something went wrong",
+      "errorRetrieve": "Unable to retrieve your order details. Please contact support with your Stripe payment confirmation.",
+      "errorNoSession": "No payment session identified. If you just paid, please check your email.",
+      "contactSupport": "Contact support"
+    }
+  },
   "footer": {
     "tagline": "Production-ready Strapi plugins.",
     "links": {

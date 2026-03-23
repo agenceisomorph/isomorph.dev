@@ -3,11 +3,15 @@
  * Tableau comparatif des offres Community / Pro / Enterprise
  * RGAA 5.6 : tableau de données avec en-têtes <th> et scope
  * RGAA 9.3 : liste de features sémantique
+ *
+ * Le CTA Pro redirige vers le checkout Stripe via la route /api/checkout.
+ * CheckoutButton est un Client Component minimal pour l'appel fetch.
  */
 
 import { useTranslations } from "next-intl";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import CheckoutButton from "./CheckoutButton";
 
 interface TierProps {
   name: string;
@@ -16,7 +20,8 @@ interface TierProps {
   features: string[];
   isFeatured?: boolean;
   ctaLabel: string;
-  ctaHref: string;
+  ctaHref?: string;
+  ctaIsCheckout?: boolean;
   priceUnit?: string;
 }
 
@@ -28,8 +33,16 @@ function PricingTier({
   isFeatured = false,
   ctaLabel,
   ctaHref,
+  ctaIsCheckout = false,
   priceUnit,
 }: TierProps) {
+  const ctaClassName = cn(
+    "mb-8 inline-flex items-center justify-center rounded-lg px-4 py-2.5 text-sm font-semibold transition-colors duration-150",
+    isFeatured
+      ? "bg-violet-600 text-white hover:bg-violet-500"
+      : "border border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-zinc-100"
+  );
+
   return (
     <div
       className={cn(
@@ -71,18 +84,22 @@ function PricingTier({
         </div>
       </div>
 
-      {/* CTA */}
-      <a
-        href={ctaHref}
-        className={cn(
-          "mb-8 inline-flex items-center justify-center rounded-lg px-4 py-2.5 text-sm font-semibold transition-colors duration-150",
-          isFeatured
-            ? "bg-violet-600 text-white hover:bg-violet-500"
-            : "border border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-zinc-100"
-        )}
-      >
-        {ctaLabel}
-      </a>
+      {/* CTA — checkout Stripe ou lien simple selon le tier */}
+      {ctaIsCheckout ? (
+        <CheckoutButton
+          plan="pro"
+          plugin="comments"
+          label={ctaLabel}
+          className={ctaClassName}
+        />
+      ) : (
+        <a
+          href={ctaHref ?? "#"}
+          className={ctaClassName}
+        >
+          {ctaLabel}
+        </a>
+      )}
 
       {/* Liste de features — RGAA 9.3 */}
       <ul role="list" className="space-y-3 flex-1">
@@ -137,7 +154,7 @@ export default function PricingTable() {
           features={tiers.pro.features}
           isFeatured
           ctaLabel={t("getStarted")}
-          ctaHref="mailto:contact@isomorph.fr?subject=Pro License"
+          ctaIsCheckout
           priceUnit={t("perYear")}
         />
         <PricingTier
