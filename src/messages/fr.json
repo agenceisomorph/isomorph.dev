@@ -1,17 +1,16 @@
 {
   "nav": {
     "plugins": "Plugins",
-    "pricing": "Tarifs",
     "about": "À propos",
     "docs": "Docs",
     "github": "GitHub"
   },
   "hero": {
     "badge": "Open Source · Licence MIT · Strapi V5",
-    "title": "Plugins Open Source",
+    "title": "L'agence Strapi",
     "titleAccent": "pour Strapi",
-    "subtitle": "Prêts pour la production. Sécurisés. Framework-agnostic.",
-    "description": "ISOMORPH développe des plugins Strapi de haute qualité, prêts à l'emploi — avec support TypeScript complet, compatibilité Strapi V5 et zéro dépendance propriétaire.",
+    "subtitle": "Nous créons des plugins open source qui améliorent Strapi.",
+    "description": "Plugins Strapi V5 prêts pour la production — TypeScript complet, sécurité auditée OWASP, zéro dépendance propriétaire. Développés par l'équipe ISOMORPH.",
     "cta": "Explorer les plugins",
     "ctaSecondary": "Voir sur GitHub"
   },
@@ -40,8 +39,8 @@
     "strapi": "Strapi V5"
   },
   "plugins": {
-    "title": "Tous les plugins",
-    "subtitle": "Plugins prêts pour la production sous Strapi V5. Open source, sécurisés et framework-agnostic.",
+    "title": "Plugins Strapi",
+    "subtitle": "Plugins prêts pour la production sous Strapi V5.",
     "comingSoon": "D'autres plugins arrivent bientôt",
     "viewDetails": "Voir le détail",
     "npmInstall": "npm install",

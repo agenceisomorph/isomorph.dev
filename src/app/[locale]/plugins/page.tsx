@@ -51,10 +51,10 @@ function PluginsCatalog() {
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
       {/* En-tête de page */}
       <div className="mb-12">
-        <h1 className="text-3xl sm:text-4xl font-bold text-zinc-100 mb-4">
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
           {t("title")}
         </h1>
-        <p className="text-zinc-500 max-w-2xl">{t("subtitle")}</p>
+        <p className="text-gray-500 max-w-2xl">{t("subtitle")}</p>
       </div>
 
       {/* Grille de plugins */}
@@ -66,9 +66,9 @@ function PluginsCatalog() {
         {/* Carte "coming soon" — éco-conception : placeholder statique */}
         <div
           aria-label={t("comingSoon")}
-          className="rounded-xl border border-dashed border-zinc-800 bg-zinc-900/10 p-6 flex items-center justify-center"
+          className="rounded-xl border border-dashed border-gray-200 bg-gray-50 p-6 flex items-center justify-center"
         >
-          <p className="text-sm text-zinc-700 text-center">{t("comingSoon")}</p>
+          <p className="text-sm text-gray-400 text-center">{t("comingSoon")}</p>
         </div>
       </div>
     </div>

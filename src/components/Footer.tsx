@@ -68,7 +68,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-zinc-800 bg-zinc-950">
+    <footer className="border-t border-gray-200 bg-gray-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Colonne marque */}
@@ -79,11 +79,11 @@ export default function Footer() {
               aria-label="ISOMORPH — Retour à l'accueil"
             >
               <IsomorphLogo />
-              <span className="font-semibold text-zinc-100 text-sm tracking-tight group-hover:text-violet-400 transition-colors duration-150">
+              <span className="font-semibold text-gray-900 text-sm tracking-tight group-hover:text-violet-600 transition-colors duration-150">
                 ISOMORPH
               </span>
             </Link>
-            <p className="mt-3 text-sm text-zinc-500 max-w-xs">
+            <p className="mt-3 text-sm text-gray-500 max-w-xs">
               {t("tagline")}
             </p>
             {/* Liens réseaux sociaux */}
@@ -93,7 +93,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="ISOMORPH sur GitHub (ouvre dans un nouvel onglet)"
-                className="text-zinc-500 hover:text-zinc-100 transition-colors duration-150"
+                className="text-gray-400 hover:text-gray-700 transition-colors duration-150"
               >
                 <GitHubIcon />
               </a>
@@ -102,7 +102,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="ISOMORPH sur npm (ouvre dans un nouvel onglet)"
-                className="text-zinc-500 hover:text-zinc-100 transition-colors duration-150"
+                className="text-gray-400 hover:text-gray-700 transition-colors duration-150"
               >
                 <NpmIcon />
               </a>
@@ -111,20 +111,20 @@ export default function Footer() {
 
           {/* Colonne plugins */}
           <nav aria-label="Liens plugins">
-            <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-4">
+            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">
               Plugins
             </h3>
             <ul className="space-y-3" role="list">
               <li>
                 <Link
                   href="/plugins/strapi-comments"
-                  className="text-sm text-zinc-500 hover:text-zinc-100 transition-colors duration-150"
+                  className="text-sm text-gray-500 hover:text-violet-600 transition-colors duration-150"
                 >
                   strapi-plugin-comments
                 </Link>
               </li>
               <li>
-                <span className="text-sm text-zinc-700 cursor-default">
+                <span className="text-sm text-gray-300 cursor-default">
                   Plus à venir…
                 </span>
               </li>
@@ -133,24 +133,16 @@ export default function Footer() {
 
           {/* Colonne ressources */}
           <nav aria-label="Liens ressources">
-            <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-4">
+            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">
               Ressources
             </h3>
             <ul className="space-y-3" role="list">
-              <li>
-                <Link
-                  href="/pricing"
-                  className="text-sm text-zinc-500 hover:text-zinc-100 transition-colors duration-150"
-                >
-                  {t("links.pricing")}
-                </Link>
-              </li>
               <li>
                 <a
                   href="https://github.com/isomorph-agency"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-zinc-500 hover:text-zinc-100 transition-colors duration-150"
+                  className="text-sm text-gray-500 hover:text-violet-600 transition-colors duration-150"
                 >
                   {t("links.github")}
                 </a>
@@ -160,7 +152,7 @@ export default function Footer() {
                   href="https://www.npmjs.com/~isomorph-agency"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-zinc-500 hover:text-zinc-100 transition-colors duration-150"
+                  className="text-sm text-gray-500 hover:text-violet-600 transition-colors duration-150"
                 >
                   {t("links.npm")}
                 </a>
@@ -170,14 +162,14 @@ export default function Footer() {
 
           {/* Colonne société */}
           <nav aria-label="Liens société">
-            <h3 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-4">
+            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">
               ISOMORPH
             </h3>
             <ul className="space-y-3" role="list">
               <li>
                 <Link
                   href="/about"
-                  className="text-sm text-zinc-500 hover:text-zinc-100 transition-colors duration-150"
+                  className="text-sm text-gray-500 hover:text-violet-600 transition-colors duration-150"
                 >
                   {t("links.about")}
                 </Link>
@@ -187,7 +179,7 @@ export default function Footer() {
                   href="https://isomorph.fr"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-zinc-500 hover:text-zinc-100 transition-colors duration-150"
+                  className="text-sm text-gray-500 hover:text-violet-600 transition-colors duration-150"
                 >
                   isomorph.fr
                 </a>
@@ -195,7 +187,7 @@ export default function Footer() {
               <li>
                 <a
                   href="mailto:contact@isomorph.fr"
-                  className="text-sm text-zinc-500 hover:text-zinc-100 transition-colors duration-150"
+                  className="text-sm text-gray-500 hover:text-violet-600 transition-colors duration-150"
                 >
                   contact@isomorph.fr
                 </a>
@@ -204,7 +196,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/admin/licenses"
-                  className="text-xs text-zinc-700 hover:text-zinc-500 transition-colors duration-150"
+                  className="text-xs text-gray-300 hover:text-gray-500 transition-colors duration-150"
                   aria-label="Accès administration licences (réservé à ISOMORPH)"
                 >
                   Admin
@@ -215,11 +207,11 @@ export default function Footer() {
         </div>
 
         {/* Barre de copyright */}
-        <div className="mt-10 pt-8 border-t border-zinc-800/60 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-zinc-600">
+        <div className="mt-10 pt-8 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-gray-400">
             &copy; {currentYear} {t("legal.copyright")}
           </p>
-          <p className="text-xs text-zinc-600">{t("legal.license")}</p>
+          <p className="text-xs text-gray-400">{t("legal.license")}</p>
         </div>
       </div>
     </footer>

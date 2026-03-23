@@ -2,18 +2,18 @@
 
 /*
  * Styles globaux ISOMORPH — isomorph.dev
- * Dark mode par défaut, fond zinc-950, accent violet-500
+ * Light theme premium (blanc/gris clair), accent violet-600
  * RGESN : pas d'import de police externe, Geist chargée via next/font
  */
 
 @layer base {
   :root {
-    color-scheme: dark;
+    color-scheme: light;
   }
 
   /* Focus visible — RGAA 12.8 : visibilité du focus */
   *:focus-visible {
-    outline: 2px solid theme(colors.violet.500);
+    outline: 2px solid theme(colors.violet.600);
     outline-offset: 2px;
     border-radius: 4px;
   }
@@ -29,10 +29,10 @@
     }
   }
 
-  /* Sélection de texte */
+  /* Sélection de texte — adapté au fond clair */
   ::selection {
-    background-color: theme(colors.violet.500 / 30%);
-    color: theme(colors.zinc.100);
+    background-color: theme(colors.violet.100);
+    color: theme(colors.violet.900);
   }
 
   /* Scrollbar personnalisée (navigateurs compatibles) */
@@ -41,26 +41,29 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: theme(colors.zinc.950);
+    background: theme(colors.gray.100);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: theme(colors.zinc.700);
+    background: theme(colors.gray.300);
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: theme(colors.zinc.600);
+    background: theme(colors.gray.400);
   }
 }
 
 @layer utilities {
-  /* Dégradé texte violet — utilisé pour les titres mis en avant */
+  /*
+   * Dégradé texte violet-indigo — utilisé pour les titres mis en avant
+   * Contraste assuré sur fond blanc via des teintes saturées (violet-600 → indigo-600)
+   */
   .text-gradient-violet {
     background: linear-gradient(
       135deg,
-      theme(colors.violet.400),
-      theme(colors.violet.600)
+      theme(colors.violet.600),
+      theme(colors.indigo.600)
     );
     background-clip: text;
     -webkit-background-clip: text;
@@ -69,6 +72,6 @@
 
   /* Fond avec bruit subtil pour les sections hero */
   .bg-noise {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
   }
 }

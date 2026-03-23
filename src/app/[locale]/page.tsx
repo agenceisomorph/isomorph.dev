@@ -74,17 +74,17 @@ function LandingContent() {
       {/* Section plugin mis en avant */}
       <section
         aria-labelledby="featured-heading"
-        className="py-16 sm:py-20 bg-zinc-950"
+        className="py-16 sm:py-20 bg-gray-50"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 mb-8">
             <span
               aria-hidden="true"
-              className="h-px flex-1 bg-zinc-800 max-w-8"
+              className="h-px flex-1 bg-gray-200 max-w-8"
             />
             <h2
               id="featured-heading"
-              className="text-xs font-semibold text-zinc-500 uppercase tracking-widest"
+              className="text-xs font-semibold text-gray-400 uppercase tracking-widest"
             >
               {t("featured.title")}
             </h2>
@@ -98,12 +98,12 @@ function LandingContent() {
       {/* Section "Why ISOMORPH" */}
       <section
         aria-labelledby="why-heading"
-        className="py-16 sm:py-20 border-t border-zinc-800/50"
+        className="py-16 sm:py-20 border-t border-gray-100"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2
             id="why-heading"
-            className="text-2xl sm:text-3xl font-bold text-zinc-100 mb-12 text-center"
+            className="text-2xl sm:text-3xl font-bold text-gray-900 mb-12 text-center"
           >
             {t("why.title")}
           </h2>
@@ -114,14 +114,14 @@ function LandingContent() {
                 <div key={key} className="text-center">
                   <div
                     aria-hidden="true"
-                    className="mx-auto mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-violet-600/10 text-violet-500"
+                    className="mx-auto mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-violet-50 text-violet-600"
                   >
                     <Icon size={22} />
                   </div>
-                  <h3 className="text-base font-semibold text-zinc-100 mb-2">
+                  <h3 className="text-base font-semibold text-gray-900 mb-2">
                     {t(`why.${key}.title`)}
                   </h3>
-                  <p className="text-sm text-zinc-500 leading-relaxed max-w-xs mx-auto">
+                  <p className="text-sm text-gray-500 leading-relaxed max-w-xs mx-auto">
                     {t(`why.${key}.description`)}
                   </p>
                 </div>
@@ -134,7 +134,7 @@ function LandingContent() {
       {/* Section stats */}
       <section
         aria-label="Statistiques ISOMORPH"
-        className="py-12 border-t border-zinc-800/50 bg-zinc-900/20"
+        className="py-12 border-t border-gray-100 bg-gray-50"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <dl className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16 text-center">
@@ -144,10 +144,10 @@ function LandingContent() {
               { value: "V5", label: t("stats.strapi") },
             ].map(({ value, label }) => (
               <div key={label}>
-                <dt className="text-3xl font-bold text-violet-400 mb-1">
+                <dt className="text-3xl font-bold text-violet-600 mb-1">
                   {value}
                 </dt>
-                <dd className="text-sm text-zinc-500">{label}</dd>
+                <dd className="text-sm text-gray-500">{label}</dd>
               </div>
             ))}
           </dl>

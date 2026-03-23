@@ -50,7 +50,7 @@ function NavLink({ href, children, onClick }: NavLinkProps) {
     <Link
       href={href}
       onClick={onClick}
-      className="text-zinc-400 hover:text-zinc-100 transition-colors duration-150 text-sm font-medium"
+      className="text-gray-500 hover:text-violet-600 transition-colors duration-150 text-sm font-medium"
     >
       {children}
     </Link>
@@ -79,7 +79,7 @@ export default function Header() {
         Aller au contenu principal
       </a>
 
-      <header className="sticky top-0 z-40 border-b border-zinc-800/60 bg-zinc-950/80 backdrop-blur-sm">
+      <header className="sticky top-0 z-40 border-b border-gray-200 bg-white/90 backdrop-blur-sm">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             {/* Logo + nom */}
@@ -89,7 +89,7 @@ export default function Header() {
               aria-label="ISOMORPH — Retour à l'accueil"
             >
               <IsomorphLogo />
-              <span className="font-semibold text-zinc-100 text-sm tracking-tight group-hover:text-violet-400 transition-colors duration-150">
+              <span className="font-semibold text-gray-900 text-sm tracking-tight group-hover:text-violet-600 transition-colors duration-150">
                 ISOMORPH
               </span>
             </Link>
@@ -97,7 +97,6 @@ export default function Header() {
             {/* Navigation desktop — RGAA 12.2 */}
             <nav aria-label="Navigation principale" className="hidden md:flex items-center gap-6">
               <NavLink href="/plugins">{t("plugins")}</NavLink>
-              <NavLink href="/pricing">{t("pricing")}</NavLink>
               <NavLink href="/about">{t("about")}</NavLink>
               <NavLink
                 href="https://github.com/isomorph-agency"
@@ -118,7 +117,7 @@ export default function Header() {
                 aria-controls="mobile-menu"
                 aria-label={mobileOpen ? "Fermer le menu" : "Ouvrir le menu"}
                 className={cn(
-                  "md:hidden p-2 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800",
+                  "md:hidden p-2 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-100",
                   "transition-colors duration-150"
                 )}
               >
@@ -136,7 +135,7 @@ export default function Header() {
         {mobileOpen && (
           <div
             id="mobile-menu"
-            className="md:hidden border-t border-zinc-800 bg-zinc-950"
+            className="md:hidden border-t border-gray-200 bg-white"
           >
             <nav
               aria-label="Navigation mobile"
@@ -144,9 +143,6 @@ export default function Header() {
             >
               <NavLink href="/plugins" onClick={closeMobile}>
                 {t("plugins")}
-              </NavLink>
-              <NavLink href="/pricing" onClick={closeMobile}>
-                {t("pricing")}
               </NavLink>
               <NavLink href="/about" onClick={closeMobile}>
                 {t("about")}

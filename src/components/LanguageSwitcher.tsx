@@ -37,7 +37,7 @@ export default function LanguageSwitcher() {
             "focus-visible:outline-2 focus-visible:outline-violet-500",
             locale === loc
               ? "bg-violet-600 text-white"
-              : "text-zinc-400 hover:text-zinc-100"
+              : "text-gray-500 hover:text-gray-900"
           )}
         >
           {loc}

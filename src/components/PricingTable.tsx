@@ -37,10 +37,10 @@ function PricingTier({
   priceUnit,
 }: TierProps) {
   const ctaClassName = cn(
-    "mb-8 inline-flex items-center justify-center rounded-lg px-4 py-2.5 text-sm font-semibold transition-colors duration-150",
+    "mb-8 inline-flex w-full items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-150",
     isFeatured
-      ? "bg-violet-600 text-white hover:bg-violet-500"
-      : "border border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-zinc-100"
+      ? "bg-gradient-to-r from-violet-600 to-indigo-600 text-white hover:from-violet-500 hover:to-indigo-500 shadow-sm hover:shadow-md"
+      : "border border-gray-300 bg-white text-gray-700 hover:border-gray-400 hover:bg-gray-50"
   );
 
   return (
@@ -48,15 +48,15 @@ function PricingTier({
       className={cn(
         "relative flex flex-col rounded-xl border p-6 sm:p-8",
         isFeatured
-          ? "border-violet-500/50 bg-violet-600/5"
-          : "border-zinc-800 bg-zinc-900/30"
+          ? "border-violet-300 bg-white shadow-md ring-1 ring-violet-200"
+          : "border-gray-200 bg-white shadow-sm"
       )}
     >
       {/* Badge "Most Popular" */}
       {isFeatured && (
         <div
           aria-label="Offre la plus populaire"
-          className="absolute -top-3.5 left-1/2 -translate-x-1/2 inline-flex items-center rounded-full bg-violet-600 px-3 py-1 text-xs font-semibold text-white"
+          className="absolute -top-3.5 left-1/2 -translate-x-1/2 inline-flex items-center rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-3 py-1 text-xs font-semibold text-white"
         >
           Most Popular
         </div>
@@ -64,8 +64,8 @@ function PricingTier({
 
       {/* En-tête du tier */}
       <div className="mb-6">
-        <h3 className="text-base font-semibold text-zinc-100 mb-1">{name}</h3>
-        <p className="text-sm text-zinc-500">{description}</p>
+        <h3 className="text-base font-semibold text-gray-900 mb-1">{name}</h3>
+        <p className="text-sm text-gray-500">{description}</p>
       </div>
 
       {/* Prix */}
@@ -73,13 +73,13 @@ function PricingTier({
         <div className="flex items-end gap-1">
           {priceUnit ? (
             <>
-              <span className="text-3xl font-bold text-zinc-100">
+              <span className="text-4xl font-bold text-gray-900">
                 {price}€
               </span>
-              <span className="text-sm text-zinc-500 mb-1">{priceUnit}</span>
+              <span className="text-sm text-gray-500 mb-1.5">{priceUnit}</span>
             </>
           ) : (
-            <span className="text-3xl font-bold text-zinc-100">{price}</span>
+            <span className="text-4xl font-bold text-gray-900">{price}</span>
           )}
         </div>
       </div>
@@ -108,9 +108,9 @@ function PricingTier({
             <Check
               size={15}
               aria-hidden="true"
-              className="mt-0.5 shrink-0 text-violet-500"
+              className="mt-0.5 shrink-0 text-violet-600"
             />
-            <span className="text-sm text-zinc-400">{feature}</span>
+            <span className="text-sm text-gray-600">{feature}</span>
           </li>
         ))}
       </ul>
@@ -130,11 +130,11 @@ export default function PricingTable() {
       <div className="text-center mb-12">
         <h2
           id="pricing-heading"
-          className="text-2xl sm:text-3xl font-bold text-zinc-100 mb-3"
+          className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3"
         >
           {t("title")}
         </h2>
-        <p className="text-zinc-500 max-w-xl mx-auto">{t("subtitle")}</p>
+        <p className="text-gray-500 max-w-xl mx-auto">{t("subtitle")}</p>
       </div>
 
       {/* Grille 3 colonnes */}

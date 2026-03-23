@@ -35,27 +35,27 @@ export default function FeatureGrid({
         <li
           key={index}
           className={cn(
-            "rounded-xl border border-zinc-800 bg-zinc-900/30 p-5",
-            "hover:border-zinc-700 transition-colors duration-150"
+            "rounded-xl border border-gray-200 bg-white p-5 shadow-sm",
+            "hover:border-violet-200 hover:shadow-md transition-all duration-150"
           )}
         >
-          {/* Icône optionnelle */}
+          {/* Icône optionnelle — fond violet pastel */}
           {feature.icon && (
             <div
               aria-hidden="true"
-              className="mb-3 inline-flex h-8 w-8 items-center justify-center rounded-lg bg-violet-600/10 text-violet-500"
+              className="mb-3 inline-flex h-8 w-8 items-center justify-center rounded-lg bg-violet-50 text-violet-600"
             >
               <feature.icon size={16} />
             </div>
           )}
 
           {/* Titre de la feature */}
-          <h3 className="text-sm font-semibold text-zinc-200 mb-1.5">
+          <h3 className="text-sm font-semibold text-gray-900 mb-1.5">
             {feature.title}
           </h3>
 
           {/* Description */}
-          <p className="text-sm text-zinc-500 leading-relaxed">
+          <p className="text-sm text-gray-500 leading-relaxed">
             {feature.description}
           </p>
         </li>

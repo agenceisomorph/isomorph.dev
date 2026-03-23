@@ -35,10 +35,10 @@ export async function generateMetadata({
   return {
     alternates: {
       // Balises hreflang FR/EN — SEO bilingue
-      // En mode as-needed : pas de préfixe pour la locale par défaut (en)
+      // En mode always : préfixe systématique sur toutes les locales (/en, /fr)
       languages: {
         fr: `https://isomorph.dev/fr`,
-        en: `https://isomorph.dev`,
+        en: `https://isomorph.dev/en`,
       },
     },
     other: {
@@ -63,7 +63,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <NextIntlClientProvider messages={messages}>
+    <NextIntlClientProvider locale={locale} messages={messages}>
       <div className="flex min-h-screen flex-col">
         <Header />
         {/*
