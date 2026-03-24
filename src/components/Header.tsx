@@ -97,6 +97,7 @@ export default function Header() {
             {/* Navigation desktop — RGAA 12.2 */}
             <nav aria-label="Navigation principale" className="hidden md:flex items-center gap-6">
               <NavLink href="/plugins">{t("plugins")}</NavLink>
+              <NavLink href="/blog">{t("blog")}</NavLink>
               <NavLink href="/about">{t("about")}</NavLink>
               <NavLink
                 href="https://github.com/isomorph-agency"
@@ -143,6 +144,9 @@ export default function Header() {
             >
               <NavLink href="/plugins" onClick={closeMobile}>
                 {t("plugins")}
+              </NavLink>
+              <NavLink href="/blog" onClick={closeMobile}>
+                {t("blog")}
               </NavLink>
               <NavLink href="/about" onClick={closeMobile}>
                 {t("about")}

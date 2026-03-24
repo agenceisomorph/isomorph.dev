@@ -36,9 +36,11 @@ export async function generateMetadata({
     alternates: {
       // Balises hreflang FR/EN — SEO bilingue
       // En mode always : préfixe systématique sur toutes les locales (/en, /fr)
+      // x-default pointe vers /en (langue prioritaire pour l'audience internationale)
       languages: {
         fr: `https://isomorph.dev/fr`,
         en: `https://isomorph.dev/en`,
+        "x-default": `https://isomorph.dev/en`,
       },
     },
     other: {
