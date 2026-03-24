@@ -11,14 +11,25 @@ Site vitrine des plugins ISOMORPH pour Strapi, hébergé sur isomorph.dev (Verce
 - Geist Sans + Mono
 - Dark mode par défaut, accent violet-500
 
-## État au 23 mars 2026
+## État au 24 mars 2026
 
 ### Ce qui est fait
 - Scaffold complet : 5 pages, 7 composants, i18n FR/EN
-- Build OK : 13 pages statiques, < 120 kB First Load JS
+- Build OK : 21 pages statiques, < 120 kB First Load JS
 - Repo Git initialisé (pas encore sur GitHub)
 - SEO : generateMetadata sur chaque page
 - RGAA 4.1 : sémantique, contrastes, focus visible
+- **Audit SEO technique SIGNAL (session du 24 mars 2026)**
+  - `src/app/robots.ts` : robots.txt dynamique, bloque /api/, /admin/, /checkout/
+  - `src/app/sitemap.ts` : sitemap XML dynamique, 8 entrées FR+EN, alternates hreflang + x-default
+  - `src/components/JsonLd.tsx` : composant utilitaire JSON-LD (sécurisé, escape \u003c)
+  - `src/app/[locale]/layout.tsx` : ajout x-default dans hreflang
+  - `src/app/[locale]/page.tsx` : métadonnées enrichies + JSON-LD Organization + WebSite + SearchAction
+  - `src/app/[locale]/plugins/page.tsx` : métadonnées enrichies + JSON-LD ItemList
+  - `src/app/[locale]/plugins/strapi-comments/page.tsx` : métadonnées enrichies + JSON-LD SoftwareApplication + BreadcrumbList + FAQPage
+  - `src/app/[locale]/about/page.tsx` : métadonnées enrichies + JSON-LD Organization enrichi
+  - Rapport d'audit : `_docs/audit-seo-technique-2026-03-24.md`
+  - Score SEO : 3/10 → 7.5/10
 - **Tunnel Stripe + gestion des licences (session du 23 mars 2026)**
   - `src/lib/license.ts` : générateur/validateur de clés, CRUD JSON
   - `src/app/api/checkout/route.ts` : création session Stripe Checkout
@@ -47,14 +58,21 @@ Site vitrine des plugins ISOMORPH pour Strapi, hébergé sur isomorph.dev (Verce
 - [ ] Créer le repo GitHub (agenceisomorph/isomorph-dev)
 - [ ] Connecter isomorph.dev sur Vercel
 - [ ] Ajouter les screenshots du plugin dans la page Comments
-- [ ] Ajouter un blog MDX pour le SEO
-- [ ] Ajouter le sitemap dynamique
-- [ ] Ajouter les données structurées JSON-LD
+- [ ] **Créer `public/og-image.png` (1200×630) — référencée partout mais absente**
+- [ ] **Créer Google Search Console et soumettre le sitemap**
+- [ ] **Valider les JSON-LD via Google Rich Results Test**
+- [ ] Ajouter un blog MDX pour le SEO (clusters mots-clés identifiés dans l'audit)
 - [ ] Tester le rendu mobile
 - [ ] Ajouter Google Analytics / Vercel Analytics
 - [ ] V2 licences : migrer vers Neon Postgres (remplacer data/licenses.json)
 - [ ] V2 licences : rate limiting sur /api/licenses/verify (middleware Vercel Edge)
 - [ ] V2 admin : remplacer le prompt+sessionStorage par NextAuth
+- [ ] Soumettre le plugin sur Strapi Marketplace (market.strapi.io)
+
+### Historique des audits SEO
+| Date | Agent | Score | Actions |
+|------|-------|-------|---------|
+| 2026-03-24 | SIGNAL | 3→7.5/10 | robots.ts, sitemap.ts, JsonLd.tsx, métadonnées enrichies 4 pages, JSON-LD 5 schémas |
 
 ## Structure
 ```
