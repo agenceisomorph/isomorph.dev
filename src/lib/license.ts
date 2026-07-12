@@ -20,8 +20,31 @@ import { join } from "path";
 // Types
 // ---------------------------------------------------------------------------
 
-/** Plan d'abonnement disponible */
-export type LicensePlan = "pro" | "enterprise";
+/**
+ * Plan d'abonnement disponible.
+ * - `pro`        : 1 site (79 €/an)
+ * - `pro-multi`  : 5 sites (199 €/an) — cible agences
+ * - `enterprise` : sites illimités (349 €/an)
+ */
+export type LicensePlan = "pro" | "pro-multi" | "enterprise";
+
+/** Représente un nombre de sites illimité (Enterprise). */
+export const UNLIMITED_SEATS = 0;
+
+/**
+ * Nombre de sites (domaines distincts) autorisés par plan.
+ * `UNLIMITED_SEATS` (0) = illimité.
+ */
+export const PLAN_SEATS: Record<LicensePlan, number> = {
+  pro: 1,
+  "pro-multi": 5,
+  enterprise: UNLIMITED_SEATS,
+};
+
+/** Retourne le nombre de sites autorisés pour un plan (0 = illimité). */
+export function seatsForPlan(plan: LicensePlan): number {
+  return PLAN_SEATS[plan] ?? 1;
+}
 
 /** Statut d'une licence */
 export type LicenseStatus = "active" | "expired" | "revoked";
@@ -53,8 +76,15 @@ export interface License {
   expiresAt: string;
   /** Date de dernière vérification par le plugin (ISO 8601) */
   lastVerifiedAt?: string;
-  /** Domaine du site utilisant la licence */
+  /** Domaine du site utilisant la licence (legacy — dernier domaine vu). */
   domain?: string;
+  /**
+   * Nombre de sites (domaines distincts) autorisés. Dérivé du plan à la création.
+   * 0 = illimité (Enterprise).
+   */
+  seats: number;
+  /** Domaines distincts ayant activé cette licence (enforcement multi-sites). */
+  domains: string[];
 }
 
 /** Données nécessaires pour créer une nouvelle licence */
@@ -69,8 +99,48 @@ export interface CreateLicenseInput {
 
 /** Champs modifiables d'une licence */
 export type UpdateLicenseInput = Partial<
-  Pick<License, "status" | "domain" | "expiresAt" | "lastVerifiedAt">
+  Pick<License, "status" | "domain" | "expiresAt" | "lastVerifiedAt" | "domains" | "seats">
 >;
+
+/**
+ * Résultat d'une tentative d'activation d'un domaine sur une licence.
+ * - `ok`    : le domaine est autorisé (déjà connu, ou ajouté sous le quota).
+ * - `limit` : quota de sites atteint — ce domaine n'est pas couvert.
+ */
+export type DomainCheck =
+  | { ok: true; added: boolean }
+  | { ok: false; reason: "domain_limit" };
+
+/**
+ * Vérifie/active un domaine sur une licence en respectant le quota de sites.
+ * PURE (ne persiste pas) — retourne l'état et la nouvelle liste de domaines.
+ *
+ * Règles :
+ *   - Domaine déjà présent → ok, pas d'ajout.
+ *   - Seats illimités (0) → ok, ajout.
+ *   - Sous le quota → ok, ajout.
+ *   - Quota atteint → refus (domain_limit).
+ */
+export function checkDomain(
+  license: Pick<License, "seats" | "domains">,
+  domain: string
+): { check: DomainCheck; domains: string[] } {
+  const current = license.domains ?? [];
+  const d = domain.trim().toLowerCase();
+
+  if (!d) {
+    // Domaine vide (best effort) : on ne bloque pas, on n'ajoute rien.
+    return { check: { ok: true, added: false }, domains: current };
+  }
+  if (current.includes(d)) {
+    return { check: { ok: true, added: false }, domains: current };
+  }
+  const unlimited = (license.seats ?? 1) === UNLIMITED_SEATS;
+  if (unlimited || current.length < (license.seats ?? 1)) {
+    return { check: { ok: true, added: true }, domains: [...current, d] };
+  }
+  return { check: { ok: false, reason: "domain_limit" }, domains: current };
+}
 
 // ---------------------------------------------------------------------------
 // Chemin du fichier de stockage
@@ -213,6 +283,8 @@ export function createLicense(data: CreateLicenseInput): License {
   const expiresAt = new Date(now);
   expiresAt.setFullYear(expiresAt.getFullYear() + 1);
 
+  const seedDomain = data.domain?.trim().toLowerCase();
+
   const license: License = {
     id: randomUUID(),
     key: generateLicenseKey(data.plugin),
@@ -224,6 +296,9 @@ export function createLicense(data: CreateLicenseInput): License {
     stripeSubscriptionId: data.stripeSubscriptionId,
     createdAt: now.toISOString(),
     expiresAt: expiresAt.toISOString(),
+    // Quota de sites dérivé du plan (0 = illimité).
+    seats: seatsForPlan(data.plan),
+    domains: seedDomain ? [seedDomain] : [],
     ...(data.domain ? { domain: data.domain } : {}),
   };
 

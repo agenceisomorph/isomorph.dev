@@ -68,15 +68,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    // Validation du plan
-    if (plan !== "pro" && plan !== "enterprise") {
+    // Validation du plan (3 paliers self-service ; Enterprise sur devis)
+    if (plan !== "pro" && plan !== "pro-multi" && plan !== "enterprise") {
       return NextResponse.json(
-        { error: "Le plan doit être 'pro' ou 'enterprise'" },
+        { error: "Le plan doit être 'pro', 'pro-multi' ou 'enterprise'" },
         { status: 400 }
       );
     }
 
-    // Enterprise → pas de checkout automatique
+    // Enterprise → pas de checkout automatique (devis / contact)
     if (plan === "enterprise") {
       return NextResponse.json(
         {
@@ -105,10 +105,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    // Vérification de la variable de prix Stripe
-    const priceId = process.env.STRIPE_PRICE_PRO;
+    // Prix Stripe par palier (une variable d'env par palier).
+    const priceId =
+      plan === "pro-multi"
+        ? process.env.STRIPE_PRICE_PRO_MULTI
+        : process.env.STRIPE_PRICE_PRO;
     if (!priceId) {
-      console.error("[checkout] STRIPE_PRICE_PRO n'est pas configuré");
+      console.error(
+        `[checkout] Variable de prix Stripe non configurée pour le plan '${plan}'`
+      );
       return NextResponse.json(
         { error: "Configuration de paiement indisponible" },
         { status: 503 }
