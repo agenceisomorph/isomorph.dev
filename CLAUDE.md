@@ -35,13 +35,25 @@ Site vitrine des plugins ISOMORPH pour Strapi, hébergé sur isomorph.dev (Verce
   - CSP dans `next.config.ts` étendu pour Stripe (js.stripe.com, api.stripe.com, etc.)
   - Traductions FR/EN ajoutées (namespace `checkout.success`)
 
+### Livraison email de la licence (fait — 2026-07-12, PR feat/license-email-tem)
+- `src/lib/email.ts` : `buildLicenseEmail()` (pur, testé standalone) + `sendLicenseEmail()`
+  via **Scaleway TEM** (défaut ISOMORPH — pas Resend/SES). Ne lève jamais : un
+  échec d'email est loggué, ne fait pas échouer le webhook (pas de retry Stripe).
+- Branché dans le webhook `checkout.session.completed` après `createLicense`.
+- `.env.example` : ajout `SCW_SECRET_KEY`, `SCW_TEM_PROJECT_ID`, `SCW_TEM_REGION`,
+  `TEM_FROM_EMAIL`, `TEM_FROM_NAME`.
+
 ### À faire AVANT la mise en production
-- [ ] `npm install` (ajoute stripe ^17.0.0)
+- [ ] `npm install` (stripe ^17.0.0) — **depuis le Mac** (npm bloqué sur la VM)
+- [ ] `npm run build` — depuis le Mac
 - [ ] Créer les produits/prix dans Stripe Dashboard et copier `STRIPE_PRICE_PRO`
 - [ ] Configurer le webhook Stripe → `https://isomorph.dev/api/webhooks/stripe`
-- [ ] Renseigner les variables d'env sur Vercel (STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_PRICE_PRO, ADMIN_API_KEY, NEXT_PUBLIC_APP_URL)
+- [ ] Renseigner les variables d'env sur Vercel (STRIPE_*, ADMIN_API_KEY,
+      NEXT_PUBLIC_APP_URL, **SCW_SECRET_KEY, SCW_TEM_PROJECT_ID, TEM_FROM_EMAIL**)
+- [ ] Vérifier l'expéditeur `support@isomorph.fr` dans Scaleway TEM
 - [ ] Remplacer le `prompt()` de `CheckoutButton` par un vrai modal email (V2)
-- [ ] Ajouter l'envoi email de la licence (Resend / SES) dans le webhook
+- [ ] Le plugin comments vérifie DÉJÀ la licence en ligne contre
+      `/api/licenses/verify` (PR strapi-plugin-comments#3) — l'endpoint est prêt.
 
 ### Ce qui reste à faire (backlog général)
 - [ ] Créer le repo GitHub (agenceisomorph/isomorph-dev)
