@@ -35,6 +35,17 @@ Site vitrine des plugins ISOMORPH pour Strapi, hébergé sur isomorph.dev (Verce
   - CSP dans `next.config.ts` étendu pour Stripe (js.stripe.com, api.stripe.com, etc.)
   - Traductions FR/EN ajoutées (namespace `checkout.success`)
 
+### Paliers multi-sites (fait — 2026-07-12, PR feat/license-seats-tiers)
+- 3 plans : `pro` (1 site, 79€), `pro-multi` (5 sites, 199€), `enterprise` (illimité, 349€).
+- `license.ts` : `seats` dérivé du plan + `domains[]` (domaines activés) sur chaque
+  licence ; `checkDomain()` (pur, testé standalone) enforce le quota.
+- Endpoint `/api/licenses/verify` : refuse (`domain_limit`) quand un nouveau domaine
+  dépasse le quota de sites du plan → le plugin repasse ce site en Community.
+- Checkout : accepte `pro-multi` (prix `STRIPE_PRICE_PRO_MULTI`) ; Enterprise reste sur devis.
+- **Reste (UI/contenu)** : refondre `PricingTable.tsx` + messages FR/EN en 3 paliers
+  (49€ lancement / 79€ / 199€ / 349€) — tâche de contenu séparée.
+- Un « site » = un domaine / instance Strapi (hypothèse à confirmer par Florent).
+
 ### À faire AVANT la mise en production
 - [ ] `npm install` (ajoute stripe ^17.0.0)
 - [ ] Créer les produits/prix dans Stripe Dashboard et copier `STRIPE_PRICE_PRO`

@@ -25,6 +25,7 @@ import {
   getLicenseByKey,
   updateLicense,
   validateLicenseKey,
+  checkDomain,
 } from "@/lib/license";
 
 // ---------------------------------------------------------------------------
@@ -42,7 +43,7 @@ interface VerifyResponseValid {
 /** Réponse en cas de licence invalide */
 interface VerifyResponseInvalid {
   valid: false;
-  reason: "invalid_format" | "not_found" | "inactive";
+  reason: "invalid_format" | "not_found" | "inactive" | "domain_limit";
 }
 
 type VerifyResponse = VerifyResponseValid | VerifyResponseInvalid;
@@ -116,14 +117,31 @@ export async function POST(request: NextRequest): Promise<NextResponse<VerifyRes
     );
   }
 
-  // Mise à jour du domaine si fourni (et différent du domaine enregistré)
+  // Enforcement multi-sites : le domaine appelant doit tenir dans le quota
+  // de sites du plan (seats). Domaine déjà connu → OK ; nouveau sous le quota
+  // → ajouté ; quota atteint → refus (la licence est déjà utilisée ailleurs).
   const domainStr = typeof domain === "string" && domain.trim() ? domain.trim() : undefined;
   const updates: Parameters<typeof updateLicense>[1] = {
     lastVerifiedAt: now.toISOString(),
   };
-  if (domainStr && domainStr !== license.domain) {
-    updates.domain = domainStr;
+
+  if (domainStr) {
+    const { check, domains } = checkDomain(license, domainStr);
+    if (!check.ok) {
+      // Quota de sites atteint → ce site n'est pas couvert. On trace la dernière
+      // vérif mais on ne débloque pas le Pro pour ce domaine.
+      updateLicense(license.id, updates);
+      return NextResponse.json(
+        { valid: false, reason: "domain_limit" } as VerifyResponseInvalid,
+        { status: 200 }
+      );
+    }
+    if (check.added) {
+      updates.domains = domains;
+    }
+    updates.domain = domainStr.trim().toLowerCase();
   }
+
   updateLicense(license.id, updates);
 
   // Retourner uniquement les informations nécessaires

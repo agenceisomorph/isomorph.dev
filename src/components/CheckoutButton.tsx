@@ -20,7 +20,7 @@ import { useState } from "react";
 import { Loader2 } from "lucide-react";
 
 interface CheckoutButtonProps {
-  plan: "pro" | "enterprise";
+  plan: "pro" | "pro-multi" | "enterprise";
   plugin: string;
   label: string;
   className?: string;
