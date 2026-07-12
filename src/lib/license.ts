@@ -1,20 +1,23 @@
 /**
  * Gestionnaire de licences ISOMORPH
  *
- * Stockage MVP : fichier JSON local (data/licenses.json)
- * Migration V2 prévue vers Neon Postgres
+ * Stockage : **Stripe est la base de données** (2026-07-12).
+ * La clé de licence et ses métadonnées (plan, plugin, domaines) vivent dans les
+ * `metadata` de l'abonnement Stripe. Raisons :
+ *   - Vercel est serverless → pas d'écriture fichier durable (l'ancien
+ *     `data/licenses.json` ne persistait pas). Stripe évite toute base annexe.
+ *   - Stripe devient la **source de vérité** : statut (actif/annulé) et expiration
+ *     (`current_period_end`) sont lus en direct → révocation/expiration automatiques.
+ *   - Aucune clé secrète nouvelle : réutilise `STRIPE_SECRET_KEY` déjà en env.
  *
- * Format de clé : ISOMORPH-COMMENTS-XXXX-XXXX-XXXX-XXXX
- * où XXXX sont des segments hexadécimaux de 4 caractères.
- * Le dernier segment contient un checksum de parité (somme paire).
+ * Les fonctions CRUD sont donc **asynchrones** (appels Stripe). `generateLicenseKey`
+ * et `validateLicenseKey` restent des utilitaires purs.
  *
- * Sécu : toutes les fonctions s'exécutent côté serveur uniquement.
- * Ce module ne doit jamais être importé dans un Client Component.
+ * Sécu : module SERVEUR uniquement (STRIPE_SECRET_KEY). Jamais dans un Client Component.
  */
 
-import { randomBytes, randomUUID } from "crypto";
-import { readFileSync, writeFileSync } from "fs";
-import { join } from "path";
+import Stripe from "stripe";
+import { randomBytes } from "crypto";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -143,11 +146,59 @@ export function checkDomain(
 }
 
 // ---------------------------------------------------------------------------
-// Chemin du fichier de stockage
+// Client Stripe (base de données des licences)
 // ---------------------------------------------------------------------------
 
-/** Résolution du chemin absolu vers data/licenses.json */
-const DB_PATH = join(process.cwd(), "data", "licenses.json");
+function stripe(): Stripe {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) throw new Error("STRIPE_SECRET_KEY n'est pas défini");
+  return new Stripe(key, { apiVersion: "2025-02-24.acacia", typescript: true });
+}
+
+/** Convertit un statut d'abonnement Stripe en statut de licence. */
+function mapStatus(s: Stripe.Subscription.Status): LicenseStatus {
+  // active/trialing → active ; past_due → active (grâce, Stripe n'a pas encore
+  // annulé) ; tout le reste (canceled/unpaid/incomplete*) → révoquée.
+  if (s === "active" || s === "trialing" || s === "past_due") return "active";
+  return "revoked";
+}
+
+/**
+ * Reconstruit une `License` depuis un abonnement Stripe.
+ * Retourne `undefined` si l'abonnement ne porte pas de licence (`license_key` absent).
+ */
+function subToLicense(sub: Stripe.Subscription): License | undefined {
+  const md = sub.metadata ?? {};
+  const key = md["license_key"];
+  if (!key) return undefined;
+
+  const plan = (md["plan"] as LicensePlan) || "pro";
+  const plugin = (md["plugin"] as PluginId) || "comments";
+  let domains: string[] = [];
+  try {
+    domains = md["domains"] ? (JSON.parse(md["domains"]) as string[]) : [];
+  } catch {
+    domains = [];
+  }
+  const customerId = typeof sub.customer === "string" ? sub.customer : sub.customer.id;
+
+  return {
+    id: sub.id,
+    key,
+    email: md["email"] ?? "",
+    plan,
+    plugin,
+    status: mapStatus(sub.status),
+    stripeCustomerId: customerId,
+    stripeSubscriptionId: sub.id,
+    createdAt: new Date(sub.created * 1000).toISOString(),
+    expiresAt: new Date(sub.current_period_end * 1000).toISOString(),
+    seats: seatsForPlan(plan),
+    domains,
+    ...(md["last_verified_at"] ? { lastVerifiedAt: md["last_verified_at"] } : {}),
+    ...(domains[0] ? { domain: domains[0] } : {}),
+  };
+}
 
 // ---------------------------------------------------------------------------
 // Génération de clé
@@ -231,134 +282,115 @@ export function validateLicenseKey(key: string): boolean {
 }
 
 // ---------------------------------------------------------------------------
-// Lecture / Écriture JSON
+// CRUD licences (backend Stripe — asynchrone)
 // ---------------------------------------------------------------------------
 
 /**
- * Lit toutes les licences depuis le fichier JSON
+ * Crée une licence en écrivant sa clé + métadonnées dans l'abonnement Stripe
+ * (déjà créé par le Checkout). L'expiration = `current_period_end` de Stripe.
  *
- * @returns Tableau de toutes les licences
- * @throws Error si le fichier est illisible ou malformé
+ * @returns La licence créée (avec sa clé). Lève si l'abonnement est introuvable.
  */
-export function getLicenses(): License[] {
-  try {
-    const raw = readFileSync(DB_PATH, "utf-8");
-    const parsed: unknown = JSON.parse(raw);
-    if (!Array.isArray(parsed)) {
-      throw new Error("Le fichier licenses.json ne contient pas un tableau valide");
-    }
-    return parsed as License[];
-  } catch (error) {
-    // Si le fichier n'existe pas encore, retourner un tableau vide
-    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
-      return [];
-    }
-    throw error;
-  }
-}
-
-/**
- * Persiste le tableau de licences dans le fichier JSON
- *
- * @param licenses - Tableau complet des licences à sauvegarder
- */
-function saveLicenses(licenses: License[]): void {
-  writeFileSync(DB_PATH, JSON.stringify(licenses, null, 2), "utf-8");
-}
-
-// ---------------------------------------------------------------------------
-// CRUD licences
-// ---------------------------------------------------------------------------
-
-/**
- * Crée et enregistre une nouvelle licence
- *
- * La date d'expiration est automatiquement fixée à 1 an après la création.
- *
- * @param data - Données nécessaires à la création
- * @returns La licence créée avec son id et sa clé
- */
-export function createLicense(data: CreateLicenseInput): License {
-  const now = new Date();
-  const expiresAt = new Date(now);
-  expiresAt.setFullYear(expiresAt.getFullYear() + 1);
-
+export async function createLicense(data: CreateLicenseInput): Promise<License> {
+  const key = generateLicenseKey(data.plugin);
   const seedDomain = data.domain?.trim().toLowerCase();
+  const domains = seedDomain ? [seedDomain] : [];
 
-  const license: License = {
-    id: randomUUID(),
-    key: generateLicenseKey(data.plugin),
-    email: data.email,
-    plan: data.plan,
-    plugin: data.plugin,
-    status: "active",
-    stripeCustomerId: data.stripeCustomerId,
-    stripeSubscriptionId: data.stripeSubscriptionId,
-    createdAt: now.toISOString(),
-    expiresAt: expiresAt.toISOString(),
-    // Quota de sites dérivé du plan (0 = illimité).
-    seats: seatsForPlan(data.plan),
-    domains: seedDomain ? [seedDomain] : [],
-    ...(data.domain ? { domain: data.domain } : {}),
-  };
+  // Stripe FUSIONNE les métadonnées : on ajoute nos clés sans écraser les autres.
+  const sub = await stripe().subscriptions.update(data.stripeSubscriptionId, {
+    metadata: {
+      license_key: key,
+      plan: data.plan,
+      plugin: data.plugin,
+      email: data.email,
+      domains: JSON.stringify(domains),
+    },
+  });
 
-  const licenses = getLicenses();
-  licenses.push(license);
-  saveLicenses(licenses);
-
+  const license = subToLicense(sub);
+  if (!license) throw new Error("createLicense : métadonnées de licence non appliquées");
   return license;
 }
 
 /**
- * Recherche une licence par sa clé lisible
- *
- * @param key - Clé au format ISOMORPH-COMMENTS-XXXX-XXXX-XXXX-XXXX
- * @returns La licence trouvée, ou undefined
+ * Recherche une licence par sa clé (via l'index de recherche Stripe sur metadata).
+ * NB : l'index Stripe a une latence de quelques secondes après écriture — sans
+ * impact réel (le client installe la clé après réception de l'email).
  */
-export function getLicenseByKey(key: string): License | undefined {
-  const licenses = getLicenses();
-  return licenses.find(
-    (l) => l.key.toUpperCase() === key.toUpperCase()
-  );
+export async function getLicenseByKey(key: string): Promise<License | undefined> {
+  const normalized = key.toUpperCase().replace(/'/g, "");
+  const res = await stripe().subscriptions.search({
+    query: `metadata['license_key']:'${normalized}'`,
+    limit: 1,
+  });
+  const sub = res.data[0];
+  return sub ? subToLicense(sub) : undefined;
+}
+
+/** Recherche une licence par l'ID de son abonnement Stripe. */
+export async function getLicenseBySubscriptionId(
+  subscriptionId: string
+): Promise<License | undefined> {
+  try {
+    const sub = await stripe().subscriptions.retrieve(subscriptionId);
+    return subToLicense(sub);
+  } catch {
+    return undefined;
+  }
 }
 
 /**
- * Recherche une licence par son ID Stripe d'abonnement
- *
- * @param subscriptionId - ID Stripe de l'abonnement
- * @returns La licence trouvée, ou undefined
+ * Met à jour une licence. `id` = ID d'abonnement Stripe.
+ * - `domains` / `domain` / `lastVerifiedAt` → écrits en métadonnées (fusion).
+ * - `status: "revoked"` → **annule l'abonnement** Stripe.
+ * - `expiresAt` / autres → ignorés (dérivés de Stripe, non modifiables ici).
  */
-export function getLicenseBySubscriptionId(subscriptionId: string): License | undefined {
-  const licenses = getLicenses();
-  return licenses.find((l) => l.stripeSubscriptionId === subscriptionId);
+export async function updateLicense(
+  id: string,
+  data: UpdateLicenseInput
+): Promise<License | undefined> {
+  try {
+    if (data.status === "revoked") {
+      const canceled = await stripe().subscriptions.cancel(id);
+      return subToLicense(canceled);
+    }
+
+    const md: Stripe.MetadataParam = {};
+    if (data.domains) md["domains"] = JSON.stringify(data.domains);
+    if (data.domain) md["last_domain"] = data.domain;
+    if (data.lastVerifiedAt) md["last_verified_at"] = data.lastVerifiedAt;
+
+    if (Object.keys(md).length === 0) {
+      const sub = await stripe().subscriptions.retrieve(id);
+      return subToLicense(sub);
+    }
+
+    const sub = await stripe().subscriptions.update(id, { metadata: md });
+    return subToLicense(sub);
+  } catch {
+    return undefined;
+  }
+}
+
+/** Révoque une licence en annulant l'abonnement Stripe. */
+export async function revokeLicense(id: string): Promise<License | undefined> {
+  try {
+    const canceled = await stripe().subscriptions.cancel(id);
+    return subToLicense(canceled);
+  } catch {
+    return undefined;
+  }
 }
 
 /**
- * Met à jour les champs modifiables d'une licence
- *
- * @param id - UUID de la licence à modifier
- * @param data - Champs à mettre à jour (partiels)
- * @returns La licence mise à jour, ou undefined si introuvable
+ * Liste les licences (abonnements Stripe portant une `license_key`).
+ * Usage admin — limité aux 100 derniers abonnements.
  */
-export function updateLicense(id: string, data: UpdateLicenseInput): License | undefined {
-  const licenses = getLicenses();
-  const index = licenses.findIndex((l) => l.id === id);
-  if (index === -1) return undefined;
-
-  licenses[index] = { ...licenses[index], ...data };
-  saveLicenses(licenses);
-
-  return licenses[index];
-}
-
-/**
- * Révoque une licence (status → "revoked")
- *
- * @param id - UUID de la licence à révoquer
- * @returns La licence révoquée, ou undefined si introuvable
- */
-export function revokeLicense(id: string): License | undefined {
-  return updateLicense(id, { status: "revoked" });
+export async function getLicenses(): Promise<License[]> {
+  const res = await stripe().subscriptions.list({ status: "all", limit: 100 });
+  return res.data
+    .map(subToLicense)
+    .filter((l): l is License => l !== undefined);
 }
 
 // ---------------------------------------------------------------------------

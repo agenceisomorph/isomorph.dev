@@ -109,7 +109,7 @@ export default async function CheckoutSuccessPage({
       if (subscriptionId) {
         // Attente courte : le webhook peut arriver légèrement après le redirect
         // En production, prévoir une page de polling ou un email de confirmation
-        const license = getLicenseBySubscriptionId(subscriptionId);
+        const license = await getLicenseBySubscriptionId(subscriptionId);
         if (license) {
           licenseKey = license.key;
         }

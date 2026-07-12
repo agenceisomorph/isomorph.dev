@@ -22,12 +22,7 @@
 
 import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
-import {
-  createLicense,
-  getLicenseBySubscriptionId,
-  updateLicense,
-  revokeLicense,
-} from "@/lib/license";
+import { createLicense, getLicenseBySubscriptionId } from "@/lib/license";
 import type { PluginId, LicensePlan } from "@/lib/license";
 import { sendLicenseEmail } from "@/lib/email";
 
@@ -169,7 +164,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
   const customerId = typeof customer === "string" ? customer : customer.id;
   const subscriptionId = typeof subscription === "string" ? subscription : subscription.id;
 
-  const license = createLicense({
+  const license = await createLicense({
     email,
     plan: metadata.plan as LicensePlan,
     plugin: metadata.plugin as PluginId,
@@ -192,7 +187,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
  * @param subscription - Abonnement Stripe supprimé
  */
 async function handleSubscriptionDeleted(subscription: Stripe.Subscription): Promise<void> {
-  const license = getLicenseBySubscriptionId(subscription.id);
+  const license = await getLicenseBySubscriptionId(subscription.id);
 
   if (!license) {
     console.warn("[webhook] customer.subscription.deleted : licence introuvable", {
@@ -201,8 +196,9 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription): Pro
     return;
   }
 
-  revokeLicense(license.id);
-  console.log(`[webhook] Licence révoquée : ${license.key} (abonnement annulé)`);
+  // L'abonnement est déjà annulé côté Stripe (source de vérité) → la licence est
+  // de facto révoquée. Rien à réécrire. On loggue pour la traçabilité.
+  console.log(`[webhook] Licence révoquée (abonnement annulé) : ${license.key}`);
 }
 
 /**
@@ -212,7 +208,7 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription): Pro
  * @param subscription - Abonnement Stripe mis à jour
  */
 async function handleSubscriptionUpdated(subscription: Stripe.Subscription): Promise<void> {
-  const license = getLicenseBySubscriptionId(subscription.id);
+  const license = await getLicenseBySubscriptionId(subscription.id);
 
   if (!license) {
     console.warn("[webhook] customer.subscription.updated : licence introuvable", {
@@ -221,12 +217,11 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription): Pro
     return;
   }
 
-  // Mettre à jour la date d'expiration selon la période en cours
-  if (subscription.current_period_end) {
-    const newExpiresAt = new Date(subscription.current_period_end * 1000).toISOString();
-    updateLicense(license.id, { expiresAt: newExpiresAt, status: "active" });
-    console.log(`[webhook] Licence mise à jour : ${license.key}, expiration → ${newExpiresAt}`);
-  }
+  // Statut et expiration sont désormais LUS EN DIRECT depuis Stripe (source de
+  // vérité) — aucune réécriture nécessaire. Log de traçabilité.
+  console.log(
+    `[webhook] Abonnement mis à jour : ${license.key} (statut Stripe : ${subscription.status})`
+  );
 }
 
 /**
@@ -246,15 +241,17 @@ async function handlePaymentFailed(invoice: Stripe.Invoice): Promise<void> {
     return;
   }
 
-  const license = getLicenseBySubscriptionId(subscriptionId);
+  const license = await getLicenseBySubscriptionId(subscriptionId);
 
   if (!license) {
     console.warn("[webhook] invoice.payment_failed : licence introuvable", { subscriptionId });
     return;
   }
 
-  updateLicense(license.id, { status: "expired" });
-  console.log(`[webhook] Licence expirée (paiement échoué) : ${license.key}`);
+  // On NE coupe PAS la licence sur un premier échec : Stripe passe l'abonnement en
+  // `past_due` (mappé sur « actif » = grâce), retente, puis annule si l'échec
+  // persiste → révocation automatique. Log seulement.
+  console.log(`[webhook] Paiement échoué (grâce Stripe en cours) : ${license.key}`);
 
   // TODO V2 : notifier l'utilisateur par email du problème de paiement
 }
