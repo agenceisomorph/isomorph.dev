@@ -46,9 +46,19 @@ Site vitrine des plugins ISOMORPH pour Strapi, hébergé sur isomorph.dev (Verce
   (49€ lancement / 79€ / 199€ / 349€) — tâche de contenu séparée.
 - Un « site » = un domaine / instance Strapi (hypothèse à confirmer par Florent).
 
+### Produits Stripe (compte ISOMORPH `acct_1GG00RBFAH8GRSu1`, LIVE)
+Créés le 12/07/2026 (0 abonnement). IDs de prix (non secrets) à mettre en env Vercel :
+- **Pro (1 site) — 49 €/an (prix de lancement)** : produit `prod_UCXzy1kJelRUO5`,
+  prix `STRIPE_PRICE_PRO=price_1TE8trBFAH8GRSu133yCVyJs`
+- **Multi-sites (5 sites) — 199 €/an** : produit `prod_UsCMEc0XQ6gjTQ`,
+  prix `STRIPE_PRICE_PRO_MULTI=price_1TsRxLBFAH8GRSu1OaMCMqNq`
+- Enterprise (349 €) = sur devis, pas de produit. 79 € (Pro standard) = à créer plus
+  tard quand on montera le prix de lancement.
+- ⚠️ Compte en **vérification Stripe** (2-3 j au 12/07) — payouts opérationnels après.
+
 ### À faire AVANT la mise en production
 - [ ] `npm install` (ajoute stripe ^17.0.0)
-- [ ] Créer les produits/prix dans Stripe Dashboard et copier `STRIPE_PRICE_PRO`
+- [x] ~~Créer les produits/prix Stripe~~ → faits (IDs ci-dessus). Reste : les mettre en env Vercel.
 - [ ] Configurer le webhook Stripe → `https://isomorph.dev/api/webhooks/stripe`
 - [ ] Renseigner les variables d'env sur Vercel (STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_PRICE_PRO, ADMIN_API_KEY, NEXT_PUBLIC_APP_URL)
 - [ ] Remplacer le `prompt()` de `CheckoutButton` par un vrai modal email (V2)
