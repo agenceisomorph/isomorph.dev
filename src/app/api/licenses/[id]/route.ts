@@ -12,7 +12,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { timingSafeEqual } from "crypto";
-import { updateLicense, revokeLicense, getLicenses } from "@/lib/license";
+import { updateLicense, revokeLicense, getLicenseBySubscriptionId } from "@/lib/license";
 import type { UpdateLicenseInput, LicenseStatus } from "@/lib/license";
 
 // ---------------------------------------------------------------------------
@@ -56,9 +56,8 @@ export async function PATCH(
 
   const { id } = await params;
 
-  // Vérifier que la licence existe
-  const licenses = getLicenses();
-  const existing = licenses.find((l) => l.id === id);
+  // Vérifier que la licence existe (id = ID d'abonnement Stripe)
+  const existing = await getLicenseBySubscriptionId(id);
   if (!existing) {
     return NextResponse.json({ error: "Licence introuvable" }, { status: 404 });
   }
@@ -117,7 +116,7 @@ export async function PATCH(
     );
   }
 
-  const updated = updateLicense(id, updates);
+  const updated = await updateLicense(id, updates);
   return NextResponse.json({ license: updated }, { status: 200 });
 }
 
@@ -136,9 +135,8 @@ export async function DELETE(
 
   const { id } = await params;
 
-  // Vérifier que la licence existe avant de révoquer
-  const licenses = getLicenses();
-  const existing = licenses.find((l) => l.id === id);
+  // Vérifier que la licence existe avant de révoquer (id = ID d'abonnement Stripe)
+  const existing = await getLicenseBySubscriptionId(id);
   if (!existing) {
     return NextResponse.json({ error: "Licence introuvable" }, { status: 404 });
   }
@@ -150,7 +148,7 @@ export async function DELETE(
     );
   }
 
-  const revoked = revokeLicense(id);
+  const revoked = await revokeLicense(id);
   return NextResponse.json({ license: revoked }, { status: 200 });
 }
 

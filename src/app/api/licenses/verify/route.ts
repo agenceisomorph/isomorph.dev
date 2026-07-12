@@ -85,7 +85,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<VerifyRes
   }
 
   // Recherche de la licence
-  const license = getLicenseByKey(key);
+  const license = await getLicenseByKey(key);
 
   // Réponse identique pour "introuvable" et "révoquée" — pas de fuite d'info
   if (!license) {
@@ -107,10 +107,8 @@ export async function POST(request: NextRequest): Promise<NextResponse<VerifyRes
   const now = new Date();
   const expiresAt = new Date(license.expiresAt);
   if (expiresAt < now) {
-    // Mettre à jour le statut si expiré mais pas encore marqué
-    if (license.status === "active") {
-      updateLicense(license.id, { status: "expired" });
-    }
+    // Statut/expiration sont pilotés par Stripe (source de vérité) — rien à
+    // réécrire, on refuse simplement.
     return NextResponse.json(
       { valid: false, reason: "inactive" } as VerifyResponseInvalid,
       { status: 200 }
@@ -130,7 +128,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<VerifyRes
     if (!check.ok) {
       // Quota de sites atteint → ce site n'est pas couvert. On trace la dernière
       // vérif mais on ne débloque pas le Pro pour ce domaine.
-      updateLicense(license.id, updates);
+      await updateLicense(license.id, updates);
       return NextResponse.json(
         { valid: false, reason: "domain_limit" } as VerifyResponseInvalid,
         { status: 200 }
@@ -142,7 +140,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<VerifyRes
     updates.domain = domainStr.trim().toLowerCase();
   }
 
-  updateLicense(license.id, updates);
+  await updateLicense(license.id, updates);
 
   // Retourner uniquement les informations nécessaires
   return NextResponse.json(

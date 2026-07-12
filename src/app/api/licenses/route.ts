@@ -63,7 +63,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
   // Recherche par clé
   if (keyQuery) {
-    const license = getLicenseByKey(keyQuery);
+    const license = await getLicenseByKey(keyQuery);
     if (!license) {
       return NextResponse.json(
         { error: "Licence introuvable" },
@@ -74,7 +74,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   }
 
   // Liste complète avec filtre email optionnel
-  const allLicenses = getLicenses();
+  const allLicenses = await getLicenses();
 
   if (emailQuery) {
     const filtered = allLicenses.filter((l) =>
