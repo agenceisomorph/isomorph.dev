@@ -152,7 +152,14 @@ export function checkDomain(
 function stripe(): Stripe {
   const key = process.env.STRIPE_SECRET_KEY;
   if (!key) throw new Error("STRIPE_SECRET_KEY n'est pas défini");
-  return new Stripe(key, { apiVersion: "2025-02-24.acacia", typescript: true });
+  return new Stripe(key, {
+    apiVersion: "2025-02-24.acacia",
+    typescript: true,
+    // Client HTTP fetch : indispensable en environnement serverless Vercel
+    // (le client Node par défaut peut échouer avec « StripeConnectionError »).
+    httpClient: Stripe.createFetchHttpClient(),
+    maxNetworkRetries: 2,
+  });
 }
 
 /** Convertit un statut d'abonnement Stripe en statut de licence. */
@@ -319,12 +326,22 @@ export async function createLicense(data: CreateLicenseInput): Promise<License> 
  */
 export async function getLicenseByKey(key: string): Promise<License | undefined> {
   const normalized = key.toUpperCase().replace(/'/g, "");
-  const res = await stripe().subscriptions.search({
-    query: `metadata['license_key']:'${normalized}'`,
-    limit: 1,
-  });
-  const sub = res.data[0];
-  return sub ? subToLicense(sub) : undefined;
+  try {
+    const res = await stripe().subscriptions.search({
+      query: `metadata['license_key']:'${normalized}'`,
+      limit: 1,
+    });
+    const sub = res.data[0];
+    return sub ? subToLicense(sub) : undefined;
+  } catch (err) {
+    // Log détaillé pour diagnostic (type + message + code Stripe), puis on
+    // laisse remonter afin que la route décide (grâce côté plugin sur 5xx).
+    const e = err as { type?: string; code?: string; message?: string };
+    console.error(
+      `[license] getLicenseByKey Stripe error — type=${e.type} code=${e.code} msg=${e.message}`
+    );
+    throw err;
+  }
 }
 
 /** Recherche une licence par l'ID de son abonnement Stripe. */
