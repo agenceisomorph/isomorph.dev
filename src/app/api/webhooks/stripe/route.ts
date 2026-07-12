@@ -29,6 +29,7 @@ import {
   revokeLicense,
 } from "@/lib/license";
 import type { PluginId, LicensePlan } from "@/lib/license";
+import { sendLicenseEmail } from "@/lib/email";
 
 // ---------------------------------------------------------------------------
 // Configuration Next.js — désactiver le body parser pour lire le raw body
@@ -178,7 +179,10 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
 
   console.log(`[webhook] Licence créée : ${license.key} pour ${email} (${metadata.plan})`);
 
-  // TODO V2 : envoyer la licence par email via Resend / SES
+  // Livraison de la clé par email (Scaleway TEM). Ne bloque/échoue jamais le
+  // webhook : un échec d'email est loggué et rejouable, il ne doit pas provoquer
+  // un retry Stripe (qui recréerait une licence).
+  await sendLicenseEmail(license);
 }
 
 /**
