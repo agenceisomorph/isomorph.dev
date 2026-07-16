@@ -108,10 +108,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     // Prix Stripe par palier (une variable d'env par palier).
-    const priceId =
+    // `.trim()` OBLIGATOIRE : la variable STRIPE_PRICE_PRO de mars contenait un
+    // retour-ligne final → Stripe « No such price: 'price_…\n' ».
+    const priceId = (
       plan === "pro-multi"
         ? process.env.STRIPE_PRICE_PRO_MULTI
-        : process.env.STRIPE_PRICE_PRO;
+        : process.env.STRIPE_PRICE_PRO
+    )?.trim();
     if (!priceId) {
       console.error(
         `[checkout] Variable de prix Stripe non configurée pour le plan '${plan}'`
