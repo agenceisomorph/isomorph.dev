@@ -122,16 +122,29 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    // URL de base pour les redirections Stripe. `NEXT_PUBLIC_APP_URL` est inlinée
-    // au build et s'est révélée malformée en prod (« Not a valid URL » côté Stripe).
-    // On la n'utilise que si c'est une URL absolue valide ; sinon on déduit
-    // l'origine de la requête (robuste, indépendant de l'env). Fallback ultime : le domaine.
-    const envUrl = process.env.NEXT_PUBLIC_APP_URL;
-    const appUrl = (
-      envUrl && /^https?:\/\//i.test(envUrl)
-        ? envUrl
-        : request.nextUrl.origin || "https://isomorph.dev"
-    ).replace(/\/+$/, "");
+    // URL de base pour les redirections Stripe. On VALIDE strictement chaque
+    // candidat via `new URL()` (attrape espaces/retours-ligne : la variable
+    // `NEXT_PUBLIC_APP_URL` de mars était malformée → « Not a valid URL » Stripe).
+    // Ordre : env → origine requête → domaine en dur. On ne garde que l'origine.
+    const appUrl = ((): string => {
+      const candidates = [
+        process.env.NEXT_PUBLIC_APP_URL,
+        request.nextUrl.origin,
+        "https://isomorph.dev",
+      ];
+      for (const c of candidates) {
+        if (!c) continue;
+        try {
+          const u = new URL(c.trim());
+          if (u.protocol === "http:" || u.protocol === "https:") {
+            return `${u.protocol}//${u.host}`;
+          }
+        } catch {
+          // candidat invalide → suivant
+        }
+      }
+      return "https://isomorph.dev";
+    })();
 
     // --- Création de la session Stripe Checkout ---
     const stripe = getStripeClient();
