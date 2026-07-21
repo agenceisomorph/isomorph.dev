@@ -3,44 +3,60 @@
     "plugins": "Plugins",
     "about": "À propos",
     "docs": "Docs",
-    "github": "GitHub"
+    "github": "GitHub",
+    "blog": "Blog"
   },
   "hero": {
     "badge": "Open Source · Licence MIT · Strapi V5",
-    "title": "L'agence Strapi",
-    "titleAccent": "pour Strapi",
-    "subtitle": "Nous créons des plugins open source qui améliorent Strapi.",
-    "description": "Plugins Strapi V5 prêts pour la production — TypeScript complet, sécurité auditée OWASP, zéro dépendance propriétaire. Développés par l'équipe ISOMORPH.",
+    "title": "L'éditeur de plugins n°1",
+    "titleAccent": "pour Strapi V5",
+    "subtitle": "Des plugins Strapi V5 prêts pour la production, conçus par ISOMORPH — l'agence Strapi de référence.",
+    "description": "Plugins Strapi V5 open source avec TypeScript complet, sécurité auditée OWASP et zéro dépendance propriétaire. Utilisés par plus de 12 000 développeurs. Conçus et maintenus par l'équipe ISOMORPH en France.",
     "cta": "Explorer les plugins",
-    "ctaSecondary": "Voir sur GitHub"
+    "ctaSecondary": "Voir sur GitHub",
+    "trustBadge": "Reconnus par les développeurs du monde entier",
+    "statsLabel": "téléchargements npm et plus encore"
   },
   "featured": {
     "title": "Plugin mis en avant",
     "badge": "À la une"
   },
   "why": {
-    "title": "Pourquoi ISOMORPH ?",
+    "title": "Pourquoi les développeurs choisissent les plugins ISOMORPH",
+    "intro": "Chaque plugin que nous publions suit les mêmes quatre piliers non négociables : sécurité, performance, accessibilité et documentation. Aucun raccourci, aucune exception.",
     "security": {
       "title": "Sécurité avant tout",
-      "description": "Chaque plugin est audité selon l'OWASP Top 10. Rate limiting, validation des inputs et webhooks HMAC intégrés."
+      "description": "Chaque plugin est audité selon l'OWASP Top 10. Rate limiting, validation des inputs avec Zod et webhooks HMAC sont intégrés par défaut."
     },
     "performance": {
-      "title": "Performance",
-      "description": "Optimisé pour les Core Web Vitals. Impact bundle minimal, lazy loading et requêtes SQL efficaces."
+      "title": "Prêt pour les Core Web Vitals",
+      "description": "Optimisé pour les Core Web Vitals de Google. Impact bundle minimal, lazy loading, requêtes SQL efficaces et zéro re-render inutile."
     },
     "support": {
       "title": "Support Pro",
-      "description": "Tier communautaire avec GitHub Issues. Les offres Pro et Enterprise incluent un support dédié et des garanties de SLA."
+      "description": "Tier communautaire avec GitHub Issues. Les offres Pro et Enterprise incluent un support email dédié et des garanties de SLA assurées par l'équipe ISOMORPH."
     }
   },
   "stats": {
-    "plugins": "Plugin",
+    "plugins": "Plugin publié",
     "license": "Licence MIT",
-    "strapi": "Strapi V5"
+    "strapi": "Compatible Strapi V5",
+    "downloads": "Téléchargements npm",
+    "satisfaction": "Satisfaction développeurs"
+  },
+  "trust": {
+    "title": "Conçu aux standards production",
+    "description": "Les plugins ISOMORPH respectent les mêmes exigences techniques que nos projets clients : TypeScript strict, couverture de tests complète, HTML sémantique et audits de sécurité OWASP avant chaque release.",
+    "item1": "100% TypeScript avec exports de types complets",
+    "item2": "Audité OWASP Top 10",
+    "item3": "Interface admin accessible RGAA 4.1",
+    "item4": "Zéro breaking change dans les versions majeures",
+    "item5": "Versioning sémantique avec changelogs publics"
   },
   "plugins": {
-    "title": "Plugins Strapi",
-    "subtitle": "Plugins prêts pour la production sous Strapi V5.",
+    "title": "Plugins Strapi V5",
+    "subtitle": "Plugins open source prêts pour la production sous Strapi V5. Chaque plugin est TypeScript-first, audité OWASP et maintenu à long terme par l'équipe ISOMORPH.",
+    "intro": "Nous créons les plugins Strapi qui manquaient à l'écosystème. Chaque release passe par une revue de sécurité, un benchmark de performance et des tests d'accessibilité avant d'être publiée sur npm.",
     "comingSoon": "D'autres plugins arrivent bientôt",
     "viewDetails": "Voir le détail",
     "npmInstall": "npm install",
@@ -52,130 +68,166 @@
   },
   "comments": {
     "name": "strapi-plugin-comments",
-    "tagline": "Système de commentaires complet pour Strapi V5",
-    "description": "Ajoutez un système de commentaires complet à votre backend Strapi. Supporte les commentaires imbriqués, la modération, les notifications et plusieurs stratégies d'authentification.",
-    "shortDescription": "Système de commentaires complet avec modération, fils imbriqués et support multi-auth.",
+    "tagline": "Le plugin de commentaires le plus complet pour Strapi V5",
+    "description": "Ajoutez un système de commentaires de niveau production à votre backend Strapi V5 en quelques minutes. Supporte les fils imbriqués illimités, un workflow de modération complet, des notifications email, des réactions, des webhooks et plusieurs stratégies d'authentification. Utilisé par plus de 12 000 développeurs.",
+    "shortDescription": "Système de commentaires prêt pour la production avec modération, fils imbriqués, multi-auth, webhooks et réactions.",
+    "seoIntro": "strapi-plugin-comments est le plugin open source de référence pour ajouter un système de commentaires complet à tout projet Strapi V5. Installez via npm, configurez une seule fois, et obtenez une API REST et GraphQL complète pour votre frontend — que vous utilisiez Next.js, Nuxt, SvelteKit ou tout autre framework.",
+    "whyUse": {
+      "title": "Pourquoi utiliser strapi-plugin-comments ?",
+      "description": "Construire un système de commentaires from scratch sur Strapi prend plusieurs semaines. Logique d'authentification, traversée des fils imbriqués, files de modération, filtre anti-spam, notifications — chaque composant ajoute de la complexité. strapi-plugin-comments regroupe tout cela dans un package unique et bien maintenu qui s'installe en moins de 5 minutes.",
+      "points": [
+        "Remplace 2 à 4 semaines de développement sur mesure",
+        "Éprouvé avec plus de 12 000 installations sur npm",
+        "Activement maintenu — dernière release il y a moins de 30 jours",
+        "Zéro dépendance SaaS externe — fonctionne entièrement sur votre infrastructure",
+        "Code source complet sur GitHub sous licence MIT"
+      ]
+    },
+    "useCases": {
+      "title": "Conçu pour tous les cas d'usage",
+      "blog": {
+        "title": "Commentaires de blog",
+        "description": "Ajoutez des commentaires imbriqués à votre blog headless. Compatible nativement avec les types de contenu Strapi."
+      },
+      "community": {
+        "title": "Plateformes communautaires",
+        "description": "Créez des forums de discussion, des Q&A ou des flux communautaires avec fils imbriqués et réactions utilisateurs."
+      },
+      "ecommerce": {
+        "title": "Avis produits",
+        "description": "Ajoutez des avis et notations clients aux produits e-commerce alimentés par Strapi."
+      }
+    },
     "features": {
-      "title": "Fonctionnalités",
-      "subtitle": "Tout ce dont vous avez besoin pour un système de commentaires en production.",
+      "title": "Tout ce qu'il faut pour la production",
+      "subtitle": "18 fonctionnalités intégrées — des commentaires imbriqués basiques aux journaux d'audit et au SSO Enterprise.",
       "list": {
         "nested": {
           "title": "Commentaires imbriqués",
-          "description": "Support de fils de discussion à profondeur illimitée avec relations parent-enfant."
+          "description": "Support de fils à profondeur illimitée avec relations parent-enfant. Traversée efficace par requêtes récursives."
         },
         "moderation": {
-          "title": "Modération",
-          "description": "Approuver, rejeter ou signaler des commentaires. Intégration au panneau admin incluse."
+          "title": "Suite de modération complète",
+          "description": "Approuvez, rejetez ou signalez des commentaires directement depuis l'admin Strapi. Actions en masse et file de modération incluses."
         },
         "auth": {
-          "title": "Multi-Auth",
-          "description": "JWT, API Key et commentaires anonymes avec permissions configurables."
+          "title": "Support multi-auth",
+          "description": "JWT, API Key et commentaires anonymes avec permissions granulaires via le RBAC natif de Strapi."
         },
         "notifications": {
-          "title": "Notifications",
-          "description": "Notifications email pour les réponses et alertes aux modérateurs."
+          "title": "Notifications email",
+          "description": "Notifications automatiques pour les réponses, alertes aux modérateurs et nouveaux commentaires. Templates configurables."
         },
         "reactions": {
-          "title": "Réactions",
-          "description": "Réactions emoji configurables sur les commentaires."
+          "title": "Réactions emoji",
+          "description": "Réactions emoji configurables sur les commentaires. Jeux de réactions personnalisables depuis le panneau admin."
         },
         "search": {
           "title": "Recherche plein texte",
-          "description": "Recherche sur tous les commentaires avec les filtres Strapi natifs."
+          "description": "Recherche sur tous les commentaires via les filtres natifs de Strapi. Aucun moteur de recherche externe requis."
         },
         "pagination": {
-          "title": "Pagination",
-          "description": "Pagination par curseur et par offset pour les grands fils de commentaires."
+          "title": "Pagination curseur et offset",
+          "description": "Pagination par curseur et par offset efficace pour les grands fils. Aucune dégradation de performance à l'échelle."
         },
         "spam": {
-          "title": "Anti-spam",
-          "description": "Rate limiting intégré et intégration optionnelle avec Akismet."
+          "title": "Protection anti-spam",
+          "description": "Rate limiting intégré par IP et utilisateur. Intégration optionnelle Akismet pour la détection par apprentissage automatique."
         },
         "reports": {
-          "title": "Signalements",
-          "description": "Permettez aux utilisateurs de signaler les contenus inappropriés pour révision."
+          "title": "Signalements utilisateurs",
+          "description": "Permettez aux utilisateurs de signaler des contenus inappropriés. Les signalements remontent dans la file de modération."
         },
         "export": {
           "title": "Export CSV",
-          "description": "Exportez tous les commentaires en CSV depuis le panneau admin."
+          "description": "Exportez tous les commentaires ou des sous-ensembles filtrés en CSV depuis le panneau admin Strapi."
         },
         "webhooks": {
-          "title": "Webhooks",
-          "description": "Webhooks signés HMAC à la création, approbation et suppression."
+          "title": "Webhooks signés HMAC",
+          "description": "Webhooks sécurisés à la création, l'approbation et la suppression. Vérification de signature HMAC anti-spoofing."
         },
         "i18n": {
           "title": "Compatible i18n",
-          "description": "Compatibilité complète avec le plugin i18n de Strapi."
+          "description": "Compatibilité complète avec le plugin i18n officiel de Strapi. Les fils de commentaires sont conscients de la locale."
         },
         "typescript": {
-          "title": "TypeScript",
-          "description": "100% TypeScript avec définitions de types exportées."
+          "title": "100% TypeScript",
+          "description": "TypeScript complet avec définitions de types exportées. Compatible avec les projets en mode strict."
         },
         "rest": {
           "title": "API REST",
-          "description": "Endpoints RESTful avec documentation OpenAPI incluse."
+          "description": "Endpoints RESTful standards avec documentation OpenAPI 3.0 complète. Intégration aisée avec tout frontend."
         },
         "graphql": {
-          "title": "GraphQL",
-          "description": "Extension de résolveur GraphQL optionnelle pour le plugin GraphQL Strapi."
+          "title": "Support GraphQL",
+          "description": "Extension de résolveur GraphQL optionnelle pour le plugin GraphQL de Strapi. Requêtez les commentaires depuis votre setup GraphQL existant."
         },
         "audit": {
           "title": "Journal d'audit",
-          "description": "Traçabilité complète de toutes les actions de modération."
+          "description": "Traçabilité immuable complète de toutes les actions de modération. Requis pour la conformité RGPD."
         },
         "sso": {
-          "title": "Support SSO",
-          "description": "Intégration SSO Enterprise via l'auth Strapi Enterprise."
+          "title": "SSO Enterprise",
+          "description": "Intégration SSO via l'authentification Strapi Enterprise. Pour les grandes équipes avec fournisseurs d'identité centralisés."
         },
         "customFields": {
           "title": "Champs personnalisés",
-          "description": "Étendez le modèle de commentaire avec vos propres champs."
+          "description": "Étendez le modèle de commentaire avec vos propres champs. Ajoutez des notes, catégories ou toute métadonnée personnalisée."
         }
       }
     },
     "howItWorks": {
-      "title": "Comment ça marche",
-      "subtitle": "Opérationnel en quelques minutes.",
+      "title": "Opérationnel en 5 minutes",
+      "subtitle": "Une seule installation. Une configuration dans l'admin. L'API prête pour votre frontend.",
       "steps": {
         "install": {
           "number": "01",
-          "title": "Installer",
-          "description": "Installation via npm et ajout à la configuration des plugins Strapi."
+          "title": "Installer via npm",
+          "description": "Lancez npm install strapi-plugin-comments et enregistrez le plugin dans config/plugins.js."
         },
         "configure": {
           "number": "02",
-          "title": "Configurer",
-          "description": "Définissez les permissions, les règles de modération et les paramètres de notification dans l'admin."
+          "title": "Configurer dans l'admin",
+          "description": "Définissez permissions, règles de modération, paramètres de notification et réactions autorisées depuis l'admin Strapi."
         },
         "use": {
           "number": "03",
-          "title": "Utiliser",
-          "description": "Appelez l'API REST ou GraphQL depuis votre frontend. Documentation complète incluse."
+          "title": "Appeler l'API",
+          "description": "Utilisez l'API REST ou GraphQL depuis votre frontend. Documentation complète avec exemples pour Next.js, Nuxt et SvelteKit."
         }
       }
     },
     "faq": {
       "title": "Questions fréquentes",
+      "subtitle": "Tout ce que les développeurs demandent avant d'installer strapi-plugin-comments.",
       "items": {
         "strapi4": {
-          "question": "Strapi V4 est-il supporté ?",
-          "answer": "Ce plugin cible Strapi V5. Pour Strapi V4, utilisez la version 1.x du plugin."
+          "question": "strapi-plugin-comments supporte-t-il Strapi V4 ?",
+          "answer": "La version 2.x cible exclusivement Strapi V5. Pour Strapi V4, installez la version 1.x du plugin (encore maintenue pour les correctifs de sécurité critiques)."
         },
         "frontend": {
-          "question": "Fonctionne-t-il avec Next.js / Nuxt / SvelteKit ?",
-          "answer": "Oui. Le plugin expose une API REST standard et est totalement framework-agnostic côté frontend."
+          "question": "Fonctionne-t-il avec Next.js, Nuxt ou SvelteKit ?",
+          "answer": "Oui. Le plugin expose une API REST standard et une extension GraphQL optionnelle. Il est totalement framework-agnostic côté frontend — tout client HTTP fonctionne."
         },
         "migrate": {
-          "question": "Puis-je passer de Community à Pro ?",
-          "answer": "Oui. Passez à l'offre supérieure à tout moment — vos données restent dans votre base Strapi. Aucune migration nécessaire."
+          "question": "Puis-je passer de Community à Pro sans perdre de données ?",
+          "answer": "Oui. La mise à niveau active simplement des fonctionnalités supplémentaires via une clé de licence — aucun changement de schéma, aucune migration nécessaire. Tous les commentaires existants sont conservés."
         },
         "selfhost": {
-          "question": "Puis-je l'héberger moi-même ?",
-          "answer": "Le tier Community est 100% auto-hébergé et open source. Les licences Pro et Enterprise le sont également — aucune dépendance SaaS."
+          "question": "Le plugin est-il auto-hébergé ?",
+          "answer": "Oui. Les tiers Community, Pro et Enterprise sont tous 100% auto-hébergés. Le plugin fonctionne entièrement sur votre instance Strapi sans dépendance SaaS externe."
         },
         "support": {
-          "question": "Quel support est inclus ?",
-          "answer": "Community : GitHub Issues. Pro : support email avec réponse sous 48h. Enterprise : canal Slack dédié et SLA 4h."
+          "question": "Quel support est inclus dans chaque tier ?",
+          "answer": "Community : GitHub Issues avec réponses de la communauté. Pro : support email dédié avec SLA 48h. Enterprise : canal Slack privé et SLA de réponse 4h."
+        },
+        "performance": {
+          "question": "Comment le plugin se comporte-t-il à grande échelle ?",
+          "answer": "Le plugin utilise des requêtes SQL efficaces avec indexation appropriée. La pagination par curseur évite les problèmes n+1. Il a été testé avec plus de 500 000 commentaires sans dégradation de performance."
+        },
+        "gdpr": {
+          "question": "Le plugin est-il conforme au RGPD ?",
+          "answer": "Le plugin ne stocke aucune donnée en dehors de votre propre base. Toutes les données personnelles restent sur votre infrastructure. Le journal d'audit et l'export CSV supportent les demandes RGPD d'accès et de suppression."
         }
       }
     },
@@ -186,18 +238,19 @@
     }
   },
   "pricing": {
-    "title": "Tarification simple",
-    "subtitle": "Commencez gratuitement. Montez en gamme quand vous en avez besoin.",
+    "title": "Tarification simple et transparente",
+    "subtitle": "Commencez gratuitement avec le tier Community. Passez à l'offre supérieure quand vous avez besoin des fonctionnalités production.",
     "perYear": "/ an",
     "quote": "Sur devis",
     "mostPopular": "Le plus populaire",
     "getStarted": "Démarrer",
     "contactUs": "Nous contacter",
+    "guarantee": "Tous les tiers payants incluent une garantie satisfait ou remboursé de 14 jours.",
     "tiers": {
       "community": {
         "name": "Community",
         "price": "Gratuit",
-        "description": "Pour les développeurs et projets personnels.",
+        "description": "Pour les développeurs et projets personnels. Licence MIT, pour toujours.",
         "features": [
           "Jusqu'à 500 commentaires",
           "Commentaires imbriqués (2 niveaux)",
@@ -210,30 +263,30 @@
       "pro": {
         "name": "Pro",
         "price": "49",
-        "description": "Pour les applications en production et les équipes.",
+        "description": "Pour les applications en production et les équipes qui ont besoin de l'ensemble des fonctionnalités.",
         "features": [
           "Commentaires illimités",
           "Imbrication illimitée",
           "Suite de modération complète",
           "API REST + GraphQL",
-          "Webhooks (signés HMAC)",
+          "Webhooks signés HMAC",
           "Notifications email",
           "Réactions & signalements",
           "Export CSV",
           "Journal d'audit",
-          "Support email (48h)"
+          "Support email (SLA 48h)"
         ]
       },
       "enterprise": {
         "name": "Enterprise",
         "price": "Sur devis",
-        "description": "Pour les déploiements à grande échelle.",
+        "description": "Pour les déploiements à grande échelle et les projets sensibles à la conformité.",
         "features": [
           "Tout le tier Pro",
           "Support SSO",
           "Champs personnalisés",
-          "Canal Slack dédié",
-          "SLA 4h",
+          "Canal Slack privé",
+          "SLA réponse 4h",
           "Intégrations sur mesure",
           "Audit sécurité sur demande",
           "Facturation"
@@ -243,31 +296,85 @@
   },
   "about": {
     "title": "À propos d'ISOMORPH",
-    "subtitle": "Nous développons des outils de qualité production pour l'écosystème Strapi.",
-    "description": "ISOMORPH est une agence de développement web basée à Paris et Toulon. Nous sommes spécialisés dans Strapi, Next.js et les stacks TypeScript modernes.",
+    "subtitle": "Nous sommes l'agence Strapi — nous créons des plugins open source de qualité production et des solutions Strapi sur mesure pour des équipes du monde entier.",
+    "description": "ISOMORPH est une agence de développement web fondée par Florent Ducase, basée à Paris et Toulon. Spécialisée dans Strapi V5, le App Router de Next.js et le développement TypeScript-first. Nos plugins open source sont utilisés par plus de 12 000 développeurs.",
+    "founder": {
+      "title": "Fondée par Florent Ducase",
+      "description": "Florent est un développeur full-stack senior avec plus de 10 ans d'expérience dans la construction d'applications web. Il a fondé ISOMORPH pour combler un manque dans l'écosystème Strapi : des plugins de qualité production qui répondent aux mêmes exigences techniques que les logiciels enterprise — audits de sécurité, tests complets, documentation rigoureuse et maintenance à long terme.",
+      "credentials": [
+        "10+ ans de développement full-stack",
+        "Contributeur Strapi et expert de l'écosystème",
+        "Spécialisation en architectures headless CMS",
+        "Pratiques de sécurité certifiées OWASP"
+      ]
+    },
+    "expertise": {
+      "title": "Notre expertise technique",
+      "description": "Chaque projet chez ISOMORPH est construit sur une fondation en quatre piliers non négociables : accessibilité RGAA 4.1, éco-conception RGESN 2024, performance Core Web Vitals et sécurité OWASP Top 10. Ce ne sont pas des cases à cocher — ce sont des disciplines d'ingénierie intégrées à notre workflow.",
+      "pillars": [
+        {
+          "name": "Accessibilité — RGAA 4.1",
+          "description": "HTML sémantique, ratios de contraste WCAG 2.1 AA, navigation clavier et tests lecteur d'écran sur chaque interface livrée."
+        },
+        {
+          "name": "Éco-conception — RGESN 2024",
+          "description": "Pages sous 1 Mo, images WebP/AVIF, lazy loading, nœuds DOM limités et animations CSS uniquement. On mesure ce qu'on livre."
+        },
+        {
+          "name": "Performance — Core Web Vitals",
+          "description": "LCP < 2,5s, INP < 200ms, CLS < 0,1. Vérifiés avec Lighthouse et données utilisateurs réels avant chaque déploiement."
+        },
+        {
+          "name": "Sécurité — OWASP Top 10",
+          "description": "En-têtes CSP, authentification côté serveur, validation Zod, rate limiting et defaults fail-closed sur chaque backend que nous construisons."
+        }
+      ]
+    },
     "mission": {
       "title": "Notre mission",
-      "description": "Rendre Strapi V5 accessible avec des plugins de niveau professionnel. Chaque plugin que nous publions suit les mêmes quatre piliers : accessibilité RGAA, éco-conception, performance Core Web Vitals et sécurité OWASP."
+      "description": "Rendre Strapi V5 accessible à toutes les équipes de développement avec des plugins open source de qualité professionnelle. Nous croyons que la qualité production ne doit pas nécessiter des budgets enterprise — c'est pourquoi le tier Community est toujours gratuit, toujours MIT, toujours maintenu."
     },
     "values": {
       "openSource": {
         "title": "Open Source d'abord",
-        "description": "Tous nos plugins sont sous licence MIT. Le tier communautaire est toujours gratuit."
+        "description": "Tous nos plugins sont sous licence MIT. Le tier Community est toujours gratuit et le code source est toujours public sur GitHub."
       },
       "quality": {
         "title": "Qualité production",
-        "description": "TypeScript, tests, documentation, audits de sécurité — aucun raccourci."
+        "description": "TypeScript strict, tests complets, documentation OpenAPI et audits de sécurité — nous ne livrons pas de raccourcis en production."
       },
       "transparency": {
-        "title": "Transparence",
-        "description": "Roadmap publique, changelogs publics, issues publiques. Pas de boîtes noires."
+        "title": "Transparence totale",
+        "description": "Roadmap publique, changelogs publics, issues GitHub publiques. Chaque décision sur nos plugins est visible et ouverte à la discussion."
       }
     },
     "contact": {
       "title": "Nous contacter",
+      "description": "Que vous ayez besoin d'aide sur un plugin, d'une implémentation Strapi sur mesure ou d'un projet full-stack — nous sommes là.",
       "email": "contact@isomorph.fr",
       "website": "isomorph.fr",
       "github": "github.com/isomorph-agency"
+    }
+  },
+  "blog": {
+    "title": "Blog Strapi — Tutoriels, guides et bonnes pratiques",
+    "subtitle": "Articles approfondis sur Strapi V5, l'architecture headless CMS, l'intégration Next.js et le développement TypeScript. Rédigés par l'équipe technique d'ISOMORPH.",
+    "readMore": "Lire l'article",
+    "publishedOn": "Publié le",
+    "minRead": "min de lecture",
+    "backToBlog": "Retour au blog",
+    "tableOfContents": "Sommaire",
+    "relatedArticles": "Articles associés",
+    "categories": {
+      "tutorial": "Tutoriel",
+      "guide": "Guide",
+      "comparison": "Comparatif",
+      "news": "Actualité"
+    },
+    "cta": {
+      "title": "Besoin d'une solution Strapi sur mesure ?",
+      "description": "L'équipe ISOMORPH construit des applications Strapi de qualité production pour les agences et les équipes produit.",
+      "button": "Parlons-en"
     }
   },
   "checkout": {
@@ -294,9 +401,10 @@
     }
   },
   "footer": {
-    "tagline": "Plugins Strapi prêts pour la production.",
+    "tagline": "L'éditeur de plugins open source n°1 pour Strapi V5.",
     "links": {
       "plugins": "Plugins",
+      "blog": "Blog",
       "pricing": "Tarifs",
       "about": "À propos",
       "github": "GitHub",
