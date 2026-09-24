@@ -174,7 +174,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
     stripeSubscriptionId: subscriptionId,
   });
 
-  console.log(`[webhook] Licence créée : ${license.key} pour ${email} (${metadata.plan})`);
+  console.log(`[webhook] Licence créée : ${license.id} (${metadata.plan})`);
 
   // Livraison de la clé par email (Scaleway TEM). Ne bloque/échoue jamais le
   // webhook : un échec d'email est loggué et rejouable, il ne doit pas provoquer
@@ -200,7 +200,7 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription): Pro
 
   // L'abonnement est déjà annulé côté Stripe (source de vérité) → la licence est
   // de facto révoquée. Rien à réécrire. On loggue pour la traçabilité.
-  console.log(`[webhook] Licence révoquée (abonnement annulé) : ${license.key}`);
+  console.log(`[webhook] Licence révoquée (abonnement annulé) : ${license.id}`);
 }
 
 /**
@@ -222,7 +222,7 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription): Pro
   // Statut et expiration sont désormais LUS EN DIRECT depuis Stripe (source de
   // vérité) — aucune réécriture nécessaire. Log de traçabilité.
   console.log(
-    `[webhook] Abonnement mis à jour : ${license.key} (statut Stripe : ${subscription.status})`
+    `[webhook] Abonnement mis à jour : ${license.id} (statut Stripe : ${subscription.status})`
   );
 }
 
@@ -253,7 +253,7 @@ async function handlePaymentFailed(invoice: Stripe.Invoice): Promise<void> {
   // On NE coupe PAS la licence sur un premier échec : Stripe passe l'abonnement en
   // `past_due` (mappé sur « actif » = grâce), retente, puis annule si l'échec
   // persiste → révocation automatique. Log seulement.
-  console.log(`[webhook] Paiement échoué (grâce Stripe en cours) : ${license.key}`);
+  console.log(`[webhook] Paiement échoué (grâce Stripe en cours) : ${license.id}`);
 
   // TODO V2 : notifier l'utilisateur par email du problème de paiement
 }
