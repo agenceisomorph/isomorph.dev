@@ -68,3 +68,25 @@ Branche : `feat/site-console` (depuis `main`).
 **Contrôle navigateur** — Accueil 1440 px : barre Console, logo, navigation, section plugins. Catalogue `/fr/plugins` : deux sections Strapi/Shopify. Fiche `/fr/plugins/comments` : fil d'Ariane, section tarifs, lien CGV. Redirection `/fr/about` vers accueil : OK. Mobile 375 px : aucun débordement, burger visible, layout cohérent. Zéro erreur console.
 
 **Commits** : `1ceac2c` (chrome), `917d7c6` (accueil + catalogue), `bce0f39` (fiches + code), `da44d41` (légales), `35a26cb` (sitemap + robots), `8ed698f` (redirections + eslint).
+
+## SENTINEL — Review et corrections (25 septembre 2026)
+
+**Session autonome — branch `feat/site-console`, diff `main...HEAD`**
+
+**15:00** — Lecture du diff complet (18 commits), de l'inventaire `_docs/inventaire-contenu-2026-09-25.md`, du plan, des pages légales, du CLAUDE.md projet, et des fichiers sources clés.
+
+**15:20** — Défauts identifiés et corrigés (commit `997ae19`) :
+
+- `next.config.ts` : CSP incomplète — `worker-src 'self' blob:` et `connect-src https://tiles.openfreemap.org` manquants, documentés comme requis dans `src/components/console/carte/chargeur.ts` (MapLibre 6, workers blob:, tuiles OpenFreeMap).
+- `src/lib/plugins.ts` : `PLUGIN_COMMENTS.statut` "publie" → "en-developpement" (inventaire §1.4 : `npm view @isomorph-agency/strapi-plugin-comments` → 404 au 25/09/2026, plugin non publié sur npm).
+- `src/app/[locale]/cgv/page.tsx` et `confidentialite/page.tsx` : version `/en` affichait un résumé réécrit en anglais ; remplacé par le texte français intégral + avis de version faisant foi.
+- `src/app/[locale]/mentions-legales/page.tsx` : version `/en` affichait un extrait partiel ; remplacé par le texte français intégral + avis.
+- `src/app/[locale]/plugins/strapi-comments/page.tsx` : page morte (redirect 301 dans `next.config.ts` depuis le commit `8ed698f`), importait `FeatureGrid` obsolète. Supprimée.
+- `src/components/` : `Header`, `Footer`, `Hero`, `PluginCard`, `FeatureGrid`, `LanguageSwitcher` (root) — composants hérités de l'ancien site, non importés par aucune page active après la suppression de `strapi-comments`. Supprimés.
+
+**15:35** — `npx tsc --noEmit` : exit 0. `npm run lint` : warnings préexistants uniquement (`checkout/success`, `rendez-vous.ts`), aucune régression. `npm run build` : vert, 87 pages statiques.
+
+**Points signalés (non corrigés — décision business ou mécanique de vente)** :
+
+- `/admin/licenses` : protection uniquement côté client (sessionStorage + mot de passe UI). Les routes API sous-jacentes (`/api/licenses*`) sont protégées par `x-admin-key` timing-safe. Le code lui-même indique "En V2 : remplacer par NextAuth" — risque limité mais connu, à traiter avant toute divulgation de l'URL admin.
+- `/api/licenses/verify` : rate limiting absent (documenté comme "à implémenter en V2"), exposé publiquement sans brida.
