@@ -80,10 +80,19 @@ const EDITIONS_COMPLETES: EditionVeilleComplete[] = listerFichiersMarkdown()
   .map(analyserFichier)
   .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 
+function retirerContenu(edition: EditionVeilleComplete): EditionVeille {
+  return {
+    slug: edition.slug,
+    titre: edition.titre,
+    date: edition.date,
+    resume: edition.resume,
+    type: edition.type,
+    niveau: edition.niveau,
+  };
+}
+
 /** Éditions sans le corps Markdown, pour les listes et les filtres. */
-export const EDITIONS: EditionVeille[] = EDITIONS_COMPLETES.map(
-  ({ contenu: _contenu, ...edition }) => edition,
-);
+export const EDITIONS: EditionVeille[] = EDITIONS_COMPLETES.map(retirerContenu);
 
 /** Édition complète par slug, corps Markdown compris. `undefined` si absente. */
 export function obtenirEdition(slug: string): EditionVeilleComplete | undefined {
