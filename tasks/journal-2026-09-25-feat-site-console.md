@@ -28,3 +28,17 @@ Branche : `feat/site-console` (depuis `main`).
 - Contrôlé dans le navigateur en 1440 et 375 : aucun débordement, toutes les planches rendues.
 - **Écart attendu** : images des articles (`/actualites/*.svg`, `*.png`) absentes du `public/` d'isomorph.dev — 404 non bloquants, pas d'assets système de design concernés.
 - Commit : `e357b13`.
+
+## FORGE — Rubrique Expérimentations (agents B, 25 septembre 2026)
+
+**14:12** — Installation `@react-three/fiber@^9.8.1` et `@react-three/drei@^10.7.8` (même pile qu'isomorph.fr). Commit `b05e8a8`.
+
+**14:20** — Création `src/lib/experimentations.ts` : `EXPERIMENTATIONS[]` (9 entrées FR), `EXPERIMENTATIONS_EN`, `getExperimentation()`. Exporté immédiatement pour l'agent A. Jeu de la Lune exclu (`Astronaute.tsx` supprimé dans `dbc0bd9`).
+
+**14:35** — Copie des 5 heros dans `src/components/experimentations/` (carte-mere, coeur-quantique, montagnes-russes, terminal, tunnel-donnees) + commun (CibleCalibrage, SequenceDemarrage). Imports corrigés (`@/components/hero-demarrage/commun/*` -> `../commun/*`). Globe, carte, décors et fonds réutilisés via import direct de `console/`.
+
+**14:50** — Wrappers créés : `DemoViewer` (client, table slug-composant, dynamic ssr:false), `DemoDecors`, `DemoFonds`, `DemoCarteGeo`, `DemoGlobe`, `CarteExperimentation` (carte galerie, aperçu SVG léger par groupe, zéro canvas 3D).
+
+**15:05** — Pages : `/[locale]/experimentations` (galerie, Server Component, 3 sections groupées) et `/[locale]/experimentations/[slug]` (detail, generateStaticParams FR+EN, métadonnées canonical+alternates). Commit `e0335d8`.
+
+**15:20** — Contrôles : `npx tsc --noEmit` -> 0 erreur sur mes fichiers (1 erreur pre-existante `PiedPageIsomorphDev.tsx`). `npm run lint` -> 0 erreur sur mes fichiers. `npm run build` -> échec pre-existant (cgv, confidentialite, mentions-legales, `PiedPageIsomorphDev.tsx`). Serveur dev 3222 : galerie 1440 px OK, mobile 375 px OK, page detail Terminal OK, aucune erreur console.
