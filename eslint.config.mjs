@@ -11,6 +11,13 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    rules: {
+      // Textes en français : apostrophes courantes dans la prose légale et éditoriale.
+      // Règle désactivée globalement pour éviter les faux positifs sur l'ensemble du site.
+      "react/no-unescaped-entities": "off",
+    },
+  },
 ];
 
 export default eslintConfig;

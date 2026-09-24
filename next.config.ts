@@ -5,6 +5,41 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   /**
+   * Redirections 301 permanentes.
+   *
+   * - /[locale]/about → /[locale] : page about supprimée, redirecte vers l'accueil.
+   * - /[locale]/plugins/strapi-comments → /[locale]/plugins/comments :
+   *   ancien slug renommé.
+   *
+   * Les deux locales (fr et en) sont couvertes par le segment :locale.
+   */
+  async redirects() {
+    return [
+      {
+        source: "/:locale/about",
+        destination: "/:locale",
+        permanent: true,
+      },
+      {
+        source: "/:locale/plugins/strapi-comments",
+        destination: "/:locale/plugins/comments",
+        permanent: true,
+      },
+      // Sans préfixe de locale (au cas où le middleware redirige d'abord)
+      {
+        source: "/about",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/plugins/strapi-comments",
+        destination: "/plugins/comments",
+        permanent: true,
+      },
+    ];
+  },
+
+  /**
    * En-têtes de sécurité HTTP — OWASP / ISOMORPH SecOps standard
    * Appliqués sur toutes les routes
    */
