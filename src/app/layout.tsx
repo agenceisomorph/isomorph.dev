@@ -4,25 +4,26 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 
 /**
- * Root layout — niveau html/body uniquement
+ * Root layout — html/body uniquement.
  *
- * Remarque architecture : avec Next.js App Router + next-intl, le segment
- * dynamique [locale] est un layout enfant. Le root layout ne reçoit pas
- * les params de segments enfants. L'attribut lang est donc défini ici à
- * "en" par défaut — next-intl gère la locale effective via son middleware
- * et les balises hreflang dans generateMetadata du layout [locale].
+ * Fond sombre : le système Console utilise --cs-fond (#02060d) déclaré
+ * dans StylesConsole. Le body reçoit la même couleur pour éviter le flash
+ * blanc au chargement.
  *
- * Geist chargée via le package officiel Vercel (zero layout shift, RGESN)
- * suppressHydrationWarning requis pour éviter le warning de dark mode
+ * lang="fr" par défaut ; next-intl injecte la vraie locale via le layout
+ * [locale] enfant.
+ *
+ * Geist chargée via le package Vercel officiel (zéro réseau, RGESN).
  */
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://isomorph.dev"),
   title: {
-    default: "ISOMORPH — Open Source Plugins for Strapi",
+    default: "ISOMORPH — Plugins et code pour Strapi",
     template: "%s | ISOMORPH",
   },
   description:
-    "Production-ready open source plugins for Strapi V5. Secure, performant, and framework-agnostic.",
+    "Plugins Strapi open source, outils, expérimentations et veille technique de l'agence ISOMORPH.",
   openGraph: {
     type: "website",
     siteName: "ISOMORPH",
@@ -33,18 +34,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${GeistSans.variable} ${GeistMono.variable}`}
-    >
-      <body className="bg-white text-gray-900 antialiased">{children}</body>
+    <html lang="fr" suppressHydrationWarning className={`${GeistSans.variable} ${GeistMono.variable}`}>
+      <body className="antialiased" style={{ background: "#02060d", color: "#ffffff" }}>
+        {children}
+      </body>
     </html>
   );
 }
