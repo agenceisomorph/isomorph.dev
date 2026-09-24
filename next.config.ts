@@ -84,7 +84,10 @@ const nextConfig: NextConfig = {
               "img-src 'self' data: blob: https://*.stripe.com",
               "font-src 'self'",
               // Connexions API Stripe (checkout sessions, webhooks côté client SDK)
-              "connect-src 'self' https://api.stripe.com https://checkout.stripe.com",
+              // + tuiles OpenFreeMap (carte MapLibre dans l'atelier)
+              "connect-src 'self' https://api.stripe.com https://checkout.stripe.com https://tiles.openfreemap.org",
+              // Workers MapLibre 6 servis en blob: depuis la même origine (voir carte/chargeur.ts)
+              "worker-src 'self' blob:",
               // iframe Stripe Checkout (3D Secure, formulaire de carte embarqué)
               "frame-src https://js.stripe.com https://hooks.stripe.com https://checkout.stripe.com",
               "frame-ancestors 'none'",

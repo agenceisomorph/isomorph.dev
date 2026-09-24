@@ -110,7 +110,9 @@ export const PLUGIN_COMMENTS: Plugin = {
   nom: "Comments",
   role:
     "Système de commentaires complet pour Strapi v5 : fils de discussion, panneau de modération, signalements, filtre anti-injures, reCAPTCHA v3, rate limiting.",
-  statut: "publie",
+  // Non publié sur npm au 25/09/2026 (npm view @isomorph-agency/strapi-plugin-comments → 404).
+  // Source du code : https://github.com/agenceisomorph/strapi-plugin-comments (public, v1.0.0).
+  statut: "en-developpement",
   categorie: "strapi",
   paiement: true,
   github: "https://github.com/agenceisomorph/strapi-plugin-comments",

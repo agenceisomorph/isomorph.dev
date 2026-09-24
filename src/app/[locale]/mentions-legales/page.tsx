@@ -154,22 +154,17 @@ function TexteEnFrancais() {
 function TexteEnAnglais() {
   return (
     <ContenuLegal>
-      <h1
-        className="type-h1 font-semibold mb-6"
-        style={{ color: "var(--cs-texte)", fontWeight: 600 }}
+      <p
+        className="type-caption mb-10 p-4 rounded"
+        style={{ color: "var(--cs-texte-3)", background: "var(--cs-surface)", border: "1px solid var(--cs-trait)" }}
       >
-        Legal notice
-      </h1>
-      <p className="type-body mb-8" style={{ color: "var(--cs-texte-2)" }}>
-        The French version of this page is the legally binding version. Please refer to the{" "}
+        The French version of this document is the legally binding version.{" "}
         <Link href="/fr/mentions-legales" style={{ color: "var(--cs-neon)" }}>
-          French legal notice
-        </Link>{" "}
-        for the authoritative text.
+          Lire la version française
+        </Link>
+        .
       </p>
-      <p className="type-body" style={{ color: "var(--cs-texte-3)" }}>
-        ISOMORPH — EURL, 58 rue de Monceau, 75008 Paris, France. RCS Paris 881 258 792. contact@isomorph.fr
-      </p>
+      <TexteEnFrancais />
     </ContenuLegal>
   );
 }

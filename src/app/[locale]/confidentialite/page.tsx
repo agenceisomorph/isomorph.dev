@@ -6,7 +6,7 @@ import { StylesConsole } from "@/components/console/fondations";
  * Politique de confidentialité — /[locale]/confidentialite
  *
  * Texte fourni par LEGAL dans _docs/legal/politique-confidentialite.md (25/09/2026).
- * Version française faisant foi. Sous /en : indication + résumé court.
+ * Version française faisant foi. Sous /en : avis + texte français intégral affiché.
  *
  * RGAA 9.1 : h1 unique.
  */
@@ -142,22 +142,17 @@ function TexteFr() {
 function TexteEn() {
   return (
     <div className="mx-auto max-w-[800px] px-4 md:px-6 xl:px-8 py-16" style={{ color: "var(--cs-texte-2)" }}>
-      <h1 className="type-h1 font-semibold mb-6" style={{ color: "var(--cs-texte)", fontWeight: 600 }}>
-        Privacy policy
-      </h1>
-      <p className="type-body mb-8">
-        The French version of this page is the legally binding version. Please refer to the{" "}
+      <p
+        className="type-caption mb-10 p-4 rounded"
+        style={{ color: "var(--cs-texte-3)", background: "var(--cs-surface)", border: "1px solid var(--cs-trait)" }}
+      >
+        The French version of this document is the legally binding version.{" "}
         <Link href="/fr/confidentialite" style={{ color: "var(--cs-neon)" }}>
-          French privacy policy
-        </Link>{" "}
-        for the authoritative text.
+          Lire la version française
+        </Link>
+        .
       </p>
-      <p className="type-body mb-4">
-        ISOMORPH processes personal data collected on isomorph.dev in compliance with GDPR (EU) 2016/679. The site sells annual licenses for its Strapi plugins. No advertising or analytics cookies are used.
-      </p>
-      <p className="type-body">
-        To exercise your rights or for any privacy-related request: contact@isomorph.fr.
-      </p>
+      <TexteFr />
     </div>
   );
 }
