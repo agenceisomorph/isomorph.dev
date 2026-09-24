@@ -13,7 +13,7 @@ import path from "node:path";
  * Lecture au build uniquement (Server Components, generateStaticParams) :
  * pas d'accès réseau, pas de coût à l'exécution côté client.
  * Sécurité : le contenu vient de fichiers versionnés dans ce dépôt, jamais
- * d'une entrée utilisateur — aucune validation Zod nécessaire ici.
+ * d'une entrée utilisateur, aucune validation Zod n'est donc nécessaire ici.
  */
 
 /** Niveau d'alerte d'une édition, réutilisé pour le badge de la liste. */
