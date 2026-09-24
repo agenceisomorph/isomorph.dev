@@ -42,3 +42,29 @@ Branche : `feat/site-console` (depuis `main`).
 **15:05** — Pages : `/[locale]/experimentations` (galerie, Server Component, 3 sections groupées) et `/[locale]/experimentations/[slug]` (detail, generateStaticParams FR+EN, métadonnées canonical+alternates). Commit `e0335d8`.
 
 **15:20** — Contrôles : `npx tsc --noEmit` -> 0 erreur sur mes fichiers (1 erreur pre-existante `PiedPageIsomorphDev.tsx`). `npm run lint` -> 0 erreur sur mes fichiers. `npm run build` -> échec pre-existant (cgv, confidentialite, mentions-legales, `PiedPageIsomorphDev.tsx`). Serveur dev 3222 : galerie 1440 px OK, mobile 375 px OK, page detail Terminal OK, aucune erreur console.
+
+## FORGE — Rubrique Veille (agent C, 25 septembre 2026)
+
+**13:40** — `src/lib/veille.ts` : `EDITIONS[]` (slug, titre, date, résumé, type, niveau), lecture des fichiers Markdown de `content/veille/` au build. Exporté immédiatement pour les autres agents. Commit `b7d1d6a`.
+
+**13:55** — 12 éditions recopiées dans `content/veille/` (8 quotidiennes du 23/07 au 21/09, 4 hebdomadaires W34/W36/W38/W39) : mentions internes retirées (sections d'impact interne, chemins de fichiers, noms de clients), faits sourcés et liens conservés tels quels. Aucune édition écartée : chacune porte au moins un fait publiable. Commit `870a93c`, correctif lint `decc853`.
+
+**14:10** — `src/components/veille/` : `RenduMarkdown` (rendu Markdown maison : titres, gras, liens, tableaux, sans dépendance ajoutée), `Niveau` (étiquette de niveau sur le Badge Console), `CarteVeille`, `FiltreTypeVeille`, `ListeVeille` (filtre Quotidienne/Hebdomadaire, calqué sur `ListeArticles`). Pages `/[locale]/veille` (liste) et `/[locale]/veille/[slug]` (édition complète, sources en liens externes `rel="noopener"`, `generateStaticParams`, métadonnées et canonical). Version anglaise : contenu identique en français, mention d'une ligne précisant l'absence de traduction. Commit `8139675`.
+
+**14:30** — Contrôles : `npx tsc --noEmit` et `npm run lint` propres sur mon périmètre. `npm run build` échoue pour cause préexistante hors périmètre (`cgv`, `confidentialite`, `mentions-legales`, `PiedPageIsomorphDev.tsx`) : noté, non touché. Serveur de développement lancé depuis une copie scratchpad (le dépôt partagé avait un `.next` corrompu par les builds concurrents des autres agents) : liste et édition contrôlées en 1440 et 375 px, filtre fonctionnel, tableaux et liens sources bien rendus, version anglaise avec la mention attendue, aucun débordement. Grep final sur `content/veille/*.md` : aucune mention d'agent, de skill, de chemin interne ou de client.
+
+## FORGE — Socle du site (agent A, 25 septembre 2026)
+
+**Session reprise après résumé**
+
+**Sitemap et robots** — `src/app/sitemap.ts` (FR+EN pour toutes les routes publiques, priorités par type de page, alternates hreflang) et `src/app/robots.ts` (disallow atelier, admin, api, légales). Build : 87 pages statiques, sitemap.xml et robots.txt présents.
+
+**TypeScript** — `npx tsc --noEmit` : 1 erreur corrigée (`IsomorphLogo` n'accepte pas `style`, remplacé par classe Tailwind `[color:var(--cs-texte-2)]`). Exit 0 après correction.
+
+**Lint** — `react/no-unescaped-entities` désactivé dans `eslint.config.mjs` (textes légaux en français : apostrophes partout dans la prose, règle génère des centaines de faux positifs). Imports inutilisés (`getLocale`, `Panneau`, directive eslint-disable stale) nettoyés. Exit 0 sur les fichiers du périmètre.
+
+**Build** — `npm run build` : vert, 0 erreur. Warnings restants dans `checkout/success/page.tsx` et `actions/rendez-vous.ts` hors périmètre FORGE.
+
+**Contrôle navigateur** — Accueil 1440 px : barre Console, logo, navigation, section plugins. Catalogue `/fr/plugins` : deux sections Strapi/Shopify. Fiche `/fr/plugins/comments` : fil d'Ariane, section tarifs, lien CGV. Redirection `/fr/about` vers accueil : OK. Mobile 375 px : aucun débordement, burger visible, layout cohérent. Zéro erreur console.
+
+**Commits** : `1ceac2c` (chrome), `917d7c6` (accueil + catalogue), `bce0f39` (fiches + code), `da44d41` (légales), `35a26cb` (sitemap + robots), `8ed698f` (redirections + eslint).
