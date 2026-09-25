@@ -52,9 +52,9 @@ export const EXPERIMENTATIONS: Experimentation[] = [
   },
   {
     slug: "coeur-quantique",
-    titre: "Coeur quantique",
+    titre: "Cœur quantique",
     resume:
-      "Coeur pulsant entouré de particules et d'arcs électriques, registre circuit vivant.",
+      "Cœur pulsant entouré de particules et d'arcs électriques, registre circuit vivant.",
     techno: "React Three Fiber · particules BufferAttribute · blending additif",
     titreEn: "Quantum heart",
     resumeEn: "Pulsating heart surrounded by particles and electric arcs, living-circuit aesthetic.",

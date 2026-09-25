@@ -25,8 +25,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: fr
-      ? "ISOMORPH — Plugins et outils pour Strapi"
-      : "ISOMORPH — Plugins and tools for Strapi",
+      ? "Plugins et outils pour Strapi"
+      : "Plugins and tools for Strapi",
     description: fr
       ? "Plugins Strapi open source, outils de développement, expérimentations visuelles et veille technique de l'agence ISOMORPH."
       : "Open source Strapi plugins, dev tools, visual experiments and technical watch by ISOMORPH agency.",
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       },
     },
     openGraph: {
-      title: fr ? "ISOMORPH — Plugins et outils pour Strapi" : "ISOMORPH — Plugins and tools for Strapi",
+      title: fr ? "Plugins et outils pour Strapi" : "Plugins and tools for Strapi",
       description: fr
         ? "Plugins Strapi open source, outils de développement, expérimentations visuelles et veille technique."
         : "Open source Strapi plugins, dev tools, visual experiments and technical watch.",
@@ -189,7 +189,7 @@ function ApercuPlugins({ locale }: { locale: string }) {
               <Link
                 href={`/${locale}/plugins/${plugin.slug}`}
                 className="block h-full group"
-                aria-label={`${plugin.nom} — ${fr ? "voir la fiche" : "view details"}`}
+                aria-label={`${plugin.nom}, ${fr ? "voir la fiche" : "view details"}`}
               >
                 <Panneau coupe="m" flou className="h-full">
                   <div className="p-5 flex flex-col gap-3 h-full">

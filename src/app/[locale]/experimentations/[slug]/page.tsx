@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const desc = estFr ? exp.resume : exp.resumeEn;
 
   return {
-    title: `${titre} — Expérimentations ISOMORPH`,
+    title: `${titre}, expérimentation`,
     description: desc,
     alternates: {
       canonical: `https://isomorph.dev/${locale}/experimentations/${slug}`,

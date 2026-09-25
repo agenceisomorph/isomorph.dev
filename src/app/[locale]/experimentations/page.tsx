@@ -31,8 +31,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const estFr = locale === "fr";
 
   const titre = estFr
-    ? "Expérimentations — ISOMORPH"
-    : "Experiments — ISOMORPH";
+    ? "Expérimentations"
+    : "Experiments";
   const description = estFr
     ? "Démonstrations visuelles et techniques : heros 3D, globe WebGL, carte MapLibre, décors d'instruments et fonds animés du système Console."
     : "Visual and technical demos: 3D heroes, WebGL globe, MapLibre map, instrument widgets and animated Console backgrounds.";

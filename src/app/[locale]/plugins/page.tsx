@@ -49,7 +49,7 @@ function CartePlugin({ plugin, locale }: { plugin: Plugin; locale: string }) {
     <Link
       href={`/${locale}/plugins/${plugin.slug}`}
       className="block h-full group"
-      aria-label={`${plugin.nom} — ${fr ? "voir la fiche" : "view details"}`}
+      aria-label={`${plugin.nom}, ${fr ? "voir la fiche" : "view details"}`}
     >
       <Panneau coupe="m" flou className="h-full">
         <div className="p-6 flex flex-col gap-4 h-full">

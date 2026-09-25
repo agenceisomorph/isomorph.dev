@@ -19,7 +19,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://isomorph.dev"),
   title: {
-    default: "ISOMORPH — Plugins et code pour Strapi",
+    default: "ISOMORPH, plugins et code pour Strapi",
     template: "%s | ISOMORPH",
   },
   description:

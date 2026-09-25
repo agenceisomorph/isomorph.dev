@@ -10,7 +10,7 @@
     "title": "The Strapi Agency",
     "titleAccent": "for Strapi",
     "subtitle": "We build open-source plugins that make Strapi better.",
-    "description": "Production-ready Strapi V5 plugins — full TypeScript support, OWASP-audited security, and zero vendor lock-in. Built by the team at ISOMORPH.",
+    "description": "Production-ready Strapi V5 plugins: full TypeScript support, OWASP-audited security, and zero vendor lock-in. Built by the team at ISOMORPH.",
     "cta": "Explore Plugins",
     "ctaSecondary": "View on GitHub"
   },
@@ -167,11 +167,11 @@
         },
         "migrate": {
           "question": "Can I migrate from Community to Pro?",
-          "answer": "Yes. Upgrade at any time — all your data stays in your Strapi database. No migration needed."
+          "answer": "Yes. Upgrade at any time: all your data stays in your Strapi database. No migration needed."
         },
         "selfhost": {
           "question": "Can I self-host?",
-          "answer": "The Community tier is 100% self-hosted and open source. Pro and Enterprise licenses are also self-hosted — no SaaS dependency."
+          "answer": "The Community tier is 100% self-hosted and open source. Pro and Enterprise licenses are also self-hosted, with no SaaS dependency."
         },
         "support": {
           "question": "What support is included?",
@@ -256,7 +256,7 @@
       },
       "quality": {
         "title": "Production Quality",
-        "description": "TypeScript, tests, documentation, security audits — no shortcuts."
+        "description": "TypeScript, tests, documentation, security audits, no shortcuts."
       },
       "transparency": {
         "title": "Transparency",
@@ -278,13 +278,13 @@
       "licenseKeyLabel": "Your license key",
       "copyKey": "Copy license key",
       "copied": "Key copied!",
-      "saveKeyWarning": "Save this key — it will not be shown again after closing this page.",
+      "saveKeyWarning": "Save this key: it will not be shown again after closing this page.",
       "licenseGenerating": "Your license is being generated…",
       "licenseGeneratingHint": "If it doesn't appear in a few seconds, check your email or contact support.",
       "installTitle": "How to activate your license",
       "installStep1": "Install the plugin via npm: npm install strapi-plugin-comments",
       "installStep2": "Add your license key to the plugin configuration (config/plugins.js)",
-      "installStep3": "Restart Strapi — your license will be verified automatically at startup.",
+      "installStep3": "Restart Strapi: your license will be verified automatically at startup.",
       "readDocs": "Read the docs",
       "backToPlugin": "Back to plugin",
       "errorTitle": "Something went wrong",
