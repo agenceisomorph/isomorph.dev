@@ -5,6 +5,14 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   /**
+   * 404 globale pour les adresses hors du segment [locale].
+   * Sert src/app/not-found.tsx à la place de la 404 Next.js par défaut.
+   */
+  experimental: {
+    globalNotFound: true,
+  },
+
+  /**
    * Redirections 301 permanentes.
    *
    * - /[locale]/about → /[locale] : page about supprimée, redirecte vers l'accueil.

@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { setRequestLocale } from "next-intl/server";
 import { StylesConsole } from "@/components/console/fondations";
 import { Bouton } from "@/components/console/Bouton";
 import PricingTable from "@/components/PricingTable";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
 import {
   PLUGINS,
   LIBELLE_STATUT_FR,
@@ -270,8 +269,7 @@ function SectionLiens({ plugin, locale }: { plugin: Plugin; locale: string }) {
 /* Section tarifs (Comments uniquement)                               */
 /* ------------------------------------------------------------------ */
 
-async function SectionTarifs({ locale }: { locale: string }) {
-  const messages = await getMessages();
+function SectionTarifs({ locale }: { locale: string }) {
   const fr = locale !== "en";
 
   return (
@@ -313,10 +311,8 @@ async function SectionTarifs({ locale }: { locale: string }) {
             </>
           )}
         </p>
-        {/* PricingTable conservée telle quelle — mécanique de vente inchangée */}
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <PricingTable />
-        </NextIntlClientProvider>
+        {/* PricingTable — le NextIntlClientProvider du layout [locale] fournit déjà les messages */}
+        <PricingTable />
       </div>
     </section>
   );
@@ -328,6 +324,8 @@ async function SectionTarifs({ locale }: { locale: string }) {
 
 export default async function FichePluginPage({ params }: PageProps) {
   const { locale, slug } = await params;
+  // Requise en next-intl v4 pour la génération statique (generateStaticParams).
+  setRequestLocale(locale);
   const plugin = PLUGINS.find((p) => p.slug === slug);
 
   if (!plugin) notFound();

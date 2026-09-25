@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import BarreIsomorphDev from "@/components/BarreIsomorphDev";
@@ -52,6 +52,10 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   if (!routing.locales.includes(locale as "fr" | "en")) {
     notFound();
   }
+
+  // Requise en next-intl v4 pour que getMessages() et useTranslations()
+  // dans les Client Components reçoivent la bonne locale lors du rendu statique.
+  setRequestLocale(locale);
 
   const messages = await getMessages();
   const l = locale as "fr" | "en";
