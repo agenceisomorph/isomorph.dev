@@ -210,7 +210,7 @@ export function HeroMontagnesRusses() {
 
         {/* CTA */}
         <div className="mr-cta">
-          <Bouton href="/contact" taille="l">Démarrer un projet</Bouton>
+          <Bouton href="https://isomorph.fr/contact" taille="l">Démarrer un projet</Bouton>
         </div>
       </div>
 

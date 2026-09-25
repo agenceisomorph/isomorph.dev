@@ -184,7 +184,7 @@ export function Introuvable() {
 
             <div className="flex flex-wrap gap-4">
               <Bouton href="/" variante="principal">{"Retour à l'accueil"}</Bouton>
-              <Bouton href="/contact" variante="tertiaire">Nous contacter</Bouton>
+              <Bouton href="https://isomorph.fr/contact" variante="tertiaire">Nous contacter</Bouton>
             </div>
           </div>
         </Panneau>

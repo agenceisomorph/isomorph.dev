@@ -536,7 +536,7 @@ export function HeroTerminal() {
           Sites, applications, outils métier. Nous concevons des solutions
           digitales durables, dont les résultats se mesurent.
         </p>
-        <Bouton href="/contact" taille="l">Démarrer un projet</Bouton>
+        <Bouton href="https://isomorph.fr/contact" taille="l">Démarrer un projet</Bouton>
       </div>
 
       {/* Journal discret — côté droit, décor pur */}

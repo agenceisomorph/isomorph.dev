@@ -222,7 +222,7 @@ export function HeroCoeurQuantique() {
           Sites, applications, outils métier. Nous concevons des solutions digitales durables, dont les résultats se mesurent.
         </p>
         <div className="hcq-t4 mt-9">
-          <Bouton href="/contact" taille="l">Démarrer un projet</Bouton>
+          <Bouton href="https://isomorph.fr/contact" taille="l">Démarrer un projet</Bouton>
         </div>
       </div>
 

@@ -220,7 +220,7 @@ export function HeroCarteMere() {
           </p>
 
           <div className={`hcm-f hcm-f-3 mt-8${actif ? " hcm-on" : ""}`}>
-            <Bouton href="/contact" taille="l">
+            <Bouton href="https://isomorph.fr/contact" taille="l">
               Démarrer un projet
             </Bouton>
           </div>
