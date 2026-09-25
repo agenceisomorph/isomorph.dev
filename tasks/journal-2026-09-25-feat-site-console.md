@@ -108,3 +108,7 @@ Branche : `feat/site-console` (depuis `main`).
 - M4 : carte `/fr/experimentations/carte` — état "prete", tuiles OpenFreeMap accessibles (200 sur pbf testé), features géographiques visibles (côte africaine confirmée au glissement).
 
 **23:50** — Commits atomiques : `823b78c` (B1), `0d8d991` (M3), `2b2a13d` (M1 + favicon + setRequestLocale).
+
+## HELM, clôture de session
+- Relecture SENTINEL et recette VERDICT (NO-GO initial : paiement par fenêtre `prompt()`, 404 par défaut, menu mobile) corrigées puis contrôlées sur build de production en 1440 et 375.
+- HELM : titres sans tiret cadratin, boutons « Démarrer un projet » vers isomorph.fr/contact, journaux serveur sans email ni clé, signatures IA retirées des messages de commit avant publication.

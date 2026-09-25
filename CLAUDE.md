@@ -1,7 +1,14 @@
-# CLAUDE.md — isomorph.dev
+# CLAUDE.md : isomorph.dev
 
-## Projet
-Site vitrine des plugins ISOMORPH pour Strapi, hébergé sur isomorph.dev (Vercel).
+## Projet (état au 25/09/2026)
+Mini-site des projets dev d'ISOMORPH : plugins (Strapi, Shopify), code open source, expérimentations visuelles, veille techno. Système de design **Console** (source de vérité désormais ici, `src/components/console`, atelier `/[locale]/atelier/console` en noindex ; il a quitté isomorph.fr sur décision de Florent du 25/09). Vente des licences du plugin Comments (Stripe, TEM) conservée telle quelle.
+
+- Rubriques : `/plugins` (+ fiches, données `src/lib/plugins.ts`), `/code`, `/experimentations` (+ démonstrations, `src/lib/experimentations.ts`), `/veille` (`content/veille/*.md`, `src/lib/veille.ts`), pages juridiques (`/mentions-legales`, `/confidentialite`, `/cgv`, textes LEGAL `_docs/legal/`).
+- Sources de contenu : `_docs/inventaire-contenu-2026-09-25.md` (aucune autre). Plan : `_docs/plan-site-2026-09-25.md`. Recette : `_docs/recette-2026-09-25.md`.
+- Domaine : `isomorph.dev` pointe vers Vercel mais n'est rattaché à aucun projet (404). À rattacher au projet `isomorph-dev` à la mise en ligne.
+- Avant mise en ligne : décisions LEGAL (`_docs/legal/synthese.md`), limitation de débit sur `/api/licenses/verify`, protection serveur de `/admin/licenses`, variables Stripe et TEM sur Vercel, webhook Stripe.
+
+## Historique (mars à juillet 2026)
 
 ## Stack
 - Next.js 15 App Router
