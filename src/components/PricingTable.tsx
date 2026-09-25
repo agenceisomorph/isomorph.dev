@@ -1,14 +1,18 @@
+"use client";
+
 /**
- * PricingTable — Server Component
- * Tableau comparatif des offres Community / Pro / Enterprise
+ * PricingTable — Client Component
+ * Tableau comparatif des offres Community / Pro / Enterprise.
+ *
+ * « use client » justifié : lit useTranslations et useLocale depuis le
+ * NextIntlClientProvider du layout [locale], qui passe la bonne locale.
+ * Héberge CheckoutButton (client) sans prop-drilling ni re-wrapping.
+ *
  * RGAA 5.6 : tableau de données avec en-têtes <th> et scope
  * RGAA 9.3 : liste de features sémantique
- *
- * Le CTA Pro redirige vers le checkout Stripe via la route /api/checkout.
- * CheckoutButton est un Client Component minimal pour l'appel fetch.
  */
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import CheckoutButton from "./CheckoutButton";
@@ -23,6 +27,8 @@ interface TierProps {
   ctaHref?: string;
   ctaIsCheckout?: boolean;
   priceUnit?: string;
+  mostPopularLabel?: string;
+  locale?: "fr" | "en";
 }
 
 function PricingTier({
@@ -35,6 +41,8 @@ function PricingTier({
   ctaHref,
   ctaIsCheckout = false,
   priceUnit,
+  mostPopularLabel = "Le plus populaire",
+  locale = "fr",
 }: TierProps) {
   const ctaClassName = cn(
     "mb-8 inline-flex w-full items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-150",
@@ -55,10 +63,10 @@ function PricingTier({
       {/* Badge "Most Popular" */}
       {isFeatured && (
         <div
-          aria-label="Offre la plus populaire"
+          aria-label={mostPopularLabel}
           className="absolute -top-3.5 left-1/2 -translate-x-1/2 inline-flex items-center rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-3 py-1 text-xs font-semibold text-white"
         >
-          Most Popular
+          {mostPopularLabel}
         </div>
       )}
 
@@ -91,6 +99,7 @@ function PricingTier({
           plugin="comments"
           label={ctaLabel}
           className={ctaClassName}
+          locale={locale}
         />
       ) : (
         <a
@@ -120,6 +129,7 @@ function PricingTier({
 
 export default function PricingTable() {
   const t = useTranslations("pricing");
+  const locale = useLocale() as "fr" | "en";
   const tiers = t.raw("tiers") as Record<
     string,
     { name: string; price: string; description: string; features: string[] }
@@ -156,6 +166,8 @@ export default function PricingTable() {
           ctaLabel={t("getStarted")}
           ctaIsCheckout
           priceUnit={t("perYear")}
+          mostPopularLabel={t("mostPopular")}
+          locale={locale}
         />
         <PricingTier
           name={tiers.enterprise.name}

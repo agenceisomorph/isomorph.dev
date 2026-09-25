@@ -150,7 +150,7 @@ export async function sendLicenseEmail(license: License): Promise<boolean> {
       console.error(`[email] TEM ${res.status} — licence ${license.id} : ${detail}`);
       return false;
     }
-    console.log(`[email] Licence ${license.key} envoyée à ${license.email}`);
+    console.log(`[email] Licence ${license.id} envoyée`);
     return true;
   } catch (err) {
     console.error(`[email] Échec envoi licence ${license.id} :`, err);
