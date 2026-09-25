@@ -90,3 +90,21 @@ Branche : `feat/site-console` (depuis `main`).
 
 - `/admin/licenses` : protection uniquement côté client (sessionStorage + mot de passe UI). Les routes API sous-jacentes (`/api/licenses*`) sont protégées par `x-admin-key` timing-safe. Le code lui-même indique "En V2 : remplacer par NextAuth" — risque limité mais connu, à traiter avant toute divulgation de l'URL admin.
 - `/api/licenses/verify` : rate limiting absent (documenté comme "à implémenter en V2"), exposé publiquement sans brida.
+
+## Session FORGE — Recette VERDICT (suite)
+
+**23:20** — Reprise de session. Vérification visuelle post-build : PricingTable affichait encore les libellés EN sur `/fr/plugins/comments` malgré `"use client"`.
+
+**23:25** — Diagnostic : `setRequestLocale(locale)` manquant dans le layout `[locale]` et la page `plugins/[slug]`. Sans cet appel next-intl v4, `getMessages()` utilisait le défaut de routing (`defaultLocale: "en"`). Fix : import + appel dans les deux fichiers.
+
+**23:30** — `global-not-found.tsx` renommé depuis `not-found.tsx` (mauvais nom) : `experimental.globalNotFound: true` cherche le fichier `global-not-found` exactement. Build confirme `✓ globalNotFound`.
+
+**23:40** — Vérifications visuelles production (`next start -p 3231`, desktop 1440 + mobile 375) :
+- B1 : formulaire email inline "Adresse email / vous@exemple.fr / Procéder au paiement / Annuler", appel POST `/api/checkout` confirmé (503 attendu sans clés Stripe), textes FR corrects.
+- B2 : aucun 500 en production.
+- M1 : `/fr/cette-page-nexiste-pas` → page "Page introuvable" (dessin Journal Console, chrome du site). Plugin inexistant → `[locale]/not-found.tsx` correct.
+- M2 : mention CGV visible au-dessus de la grille tarifaire (déjà correct dans le code depuis SENTINEL).
+- M3 : menu burger mobile overlay plein écran, Escape ferme, focus rendu au bouton.
+- M4 : carte `/fr/experimentations/carte` — état "prete", tuiles OpenFreeMap accessibles (200 sur pbf testé), features géographiques visibles (côte africaine confirmée au glissement).
+
+**23:50** — Commits atomiques : `823b78c` (B1), `0d8d991` (M3), `2b2a13d` (M1 + favicon + setRequestLocale).
