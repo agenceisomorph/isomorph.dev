@@ -1,9 +1,9 @@
 # CLAUDE.md : isomorph.dev
 
-## Projet (état au 25/09/2026)
-Mini-site des projets dev d'ISOMORPH : plugins (Strapi, Shopify), code open source, expérimentations visuelles, veille techno. Système de design **Console** (source de vérité désormais ici, `src/components/console`, atelier `/[locale]/atelier/console` en noindex ; il a quitté isomorph.fr sur décision de Florent du 25/09). Vente des licences du plugin Comments (Stripe, TEM) conservée telle quelle.
+## Projet (état au 29/09/2026)
+Mini-site des projets dev d'ISOMORPH : plugins (Strapi, Shopify), code open source, expérimentations visuelles, veille techno, **design system** (nouvelle rubrique depuis le 29/09). Système de design **Console** (`src/components/console`, atelier `/[locale]/atelier/console` en noindex) conservé comme vitrine. Identité visuelle globale : noir et blanc (Archivo Black + Jost), alignée sur le futur isomorph.fr.
 
-- Rubriques : `/plugins` (+ fiches, données `src/lib/plugins.ts`), `/code`, `/experimentations` (+ démonstrations, `src/lib/experimentations.ts`), `/veille` (`content/veille/*.md`, `src/lib/veille.ts`), pages juridiques (`/mentions-legales`, `/confidentialite`, `/cgv`, textes LEGAL `_docs/legal/`).
+- Rubriques : `/plugins` (+ fiches, données `src/lib/plugins.ts`), `/code`, `/experimentations` (+ démonstrations, `src/lib/experimentations.ts`), `/veille` (`content/veille/*.md`, `src/lib/veille.ts`), `/design-system` (fondations + fiches composants, données `src/lib/design-system.ts`), pages juridiques (`/mentions-legales`, `/confidentialite`, `/cgv`, textes LEGAL `_docs/legal/`).
 - Sources de contenu : `_docs/inventaire-contenu-2026-09-25.md` (aucune autre). Plan : `_docs/plan-site-2026-09-25.md`. Recette : `_docs/recette-2026-09-25.md`.
 - Domaine : `isomorph.dev` pointe vers Vercel mais n'est rattaché à aucun projet (404). À rattacher au projet `isomorph-dev` à la mise en ligne.
 - Avant mise en ligne : décisions LEGAL (`_docs/legal/synthese.md`), limitation de débit sur `/api/licenses/verify`, protection serveur de `/admin/licenses`, variables Stripe et TEM sur Vercel, webhook Stripe.

@@ -62,10 +62,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <div
-        className="flex min-h-screen flex-col"
-        style={{ background: "var(--cs-fond)", color: "var(--cs-texte)" }}
-      >
+      <div className="flex min-h-screen flex-col bg-blanc text-noir">
         <BarreIsomorphDev />
         {/*
          * id="main-content" : cible du lien d'évitement — RGAA 12.1

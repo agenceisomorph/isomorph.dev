@@ -1,20 +1,30 @@
 import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
+import { Archivo_Black, Jost } from "next/font/google";
 import "./globals.css";
 
 /**
  * Root layout — html/body uniquement.
  *
- * Fond sombre : le système Console utilise --cs-fond (#02060d) déclaré
- * dans StylesConsole. Le body reçoit la même couleur pour éviter le flash
- * blanc au chargement.
+ * Design noir et blanc : Archivo Black pour les titres, Jost pour le texte,
+ * fond blanc par défaut. Les pages en mode Console (atelier) ajustent
+ * elles-mêmes leur fond sombre.
  *
- * lang="fr" par défaut ; next-intl injecte la vraie locale via le layout
- * [locale] enfant.
- *
- * Geist chargée via le package Vercel officiel (zéro réseau, RGESN).
+ * RGESN : polices chargées via next/font (pas d'import réseau depuis le navigateur).
  */
+
+const texte = Jost({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-jost",
+  display: "swap",
+});
+
+const titre = Archivo_Black({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-archivo",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://isomorph.dev"),
@@ -36,8 +46,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" suppressHydrationWarning className={`${GeistSans.variable} ${GeistMono.variable}`}>
-      <body className="antialiased" style={{ background: "#02060d", color: "#ffffff" }}>
+    <html lang="fr" suppressHydrationWarning className={`${texte.variable} ${titre.variable}`}>
+      <body className="antialiased bg-blanc text-noir">
         {children}
       </body>
     </html>
