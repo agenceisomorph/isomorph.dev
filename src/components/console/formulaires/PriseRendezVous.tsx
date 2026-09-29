@@ -384,7 +384,7 @@ function Calendrier({
             aria-label="Mois précédent"
             className="inline-flex h-9 w-9 items-center justify-center text-(--cs-texte-2)
                        transition-colors hover:text-(--cs-texte) disabled:opacity-30
-                       focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--cs-neon)"
+                       focus-visible:outline-none focus-visible:text-(--cs-texte)"
           >
             <IconeChevronGauche />
           </button>
@@ -395,7 +395,7 @@ function Calendrier({
             aria-label="Mois suivant"
             className="inline-flex h-9 w-9 items-center justify-center text-(--cs-texte-2)
                        transition-colors hover:text-(--cs-texte) disabled:opacity-30
-                       focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--cs-neon)"
+                       focus-visible:outline-none focus-visible:text-(--cs-texte)"
           >
             <IconeChevronDroite />
           </button>
@@ -929,8 +929,7 @@ export function PriseRendezVous({ className = "" }: PriseRendezVousProps) {
             type="button"
             onClick={() => setEtape(1)}
             className="mt-7 type-caption text-(--cs-neon) underline underline-offset-2
-                       hover:no-underline focus-visible:outline-none
-                       focus-visible:ring-1 focus-visible:ring-(--cs-neon)"
+                       hover:no-underline focus-visible:outline-none focus-visible:no-underline"
           >
             Modifier les coordonnées
           </button>

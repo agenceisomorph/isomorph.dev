@@ -1,19 +1,20 @@
 /**
- * Pied de page d'isomorph.dev — design noir et blanc.
+ * Pied de page d'isomorph.dev — système Console.
  *
- * Liens légaux, navigation principale, GitHub et npm.
- * Fond noir, texte blanc sur le fond.
+ * Liens légaux : mentions-légales, confidentialité, cgv.
+ * Liens navigation : Plugins, Code, Expérimentations, Veille.
+ * GitHub et npm publics.
  *
  * Server Component : pas d'interactivité.
  * RGAA 12.6 : nav nommée.
- * RGAA 6.1  : intitulés explicites sur les liens d'icônes.
+ * RGAA 6.1 : intitulés explicites.
  */
 
 import Link from "next/link";
 import IsomorphLogo from "@/components/IsomorphLogo";
 
 /* ------------------------------------------------------------------ */
-/* Icônes SVG inline                                                   */
+/* Icônes SVG inline (zéro requête réseau, éco-conception)            */
 /* ------------------------------------------------------------------ */
 
 function GitHubIcon() {
@@ -53,13 +54,28 @@ export default function PiedPageIsomorphDev({ locale = "fr" }: Props) {
   ];
 
   const liensLegaux = [
-    { libelle: l === "fr" ? "Mentions légales" : "Legal notice", href: `/${l}/mentions-legales` },
-    { libelle: l === "fr" ? "Confidentialité" : "Privacy", href: `/${l}/confidentialite` },
-    { libelle: l === "fr" ? "CGV" : "Terms of sale", href: `/${l}/cgv` },
+    {
+      libelle: l === "fr" ? "Mentions légales" : "Legal notice",
+      href: `/${l}/mentions-legales`,
+    },
+    {
+      libelle: l === "fr" ? "Confidentialité" : "Privacy",
+      href: `/${l}/confidentialite`,
+    },
+    {
+      libelle: l === "fr" ? "CGV" : "Terms of sale",
+      href: `/${l}/cgv`,
+    },
   ];
 
   return (
-    <footer className="bg-noir text-blanc">
+    <footer
+      style={{
+        borderTop: "1px solid var(--cs-trait)",
+        background: "var(--cs-fond-2)",
+        color: "var(--cs-texte-3)",
+      }}
+    >
       <div className="mx-auto max-w-[1280px] px-4 md:px-6 xl:px-8 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 lg:gap-12 mb-10">
           {/* Marque */}
@@ -67,17 +83,24 @@ export default function PiedPageIsomorphDev({ locale = "fr" }: Props) {
             <Link
               href={`/${l}`}
               aria-label={l === "fr" ? "Accueil ISOMORPH" : "ISOMORPH home"}
-              className="inline-flex items-center mb-4 opacity-90 hover:opacity-100 focus-visible:opacity-100 transition-opacity duration-150"
+              className="inline-flex items-center mb-4"
             >
-              <IsomorphLogo className="h-[12px] w-auto text-blanc" />
+              <IsomorphLogo
+                className="h-[12px] w-auto [color:var(--cs-texte-2)]"
+              />
             </Link>
             <div className="flex items-center gap-3 mt-3">
               <a
                 href="https://github.com/agenceisomorph"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={l === "fr" ? "ISOMORPH sur GitHub (ouvre dans un nouvel onglet)" : "ISOMORPH on GitHub (opens in new tab)"}
-                className="opacity-50 hover:opacity-100 focus-visible:opacity-100 transition-opacity duration-150 text-blanc"
+                aria-label={
+                  l === "fr"
+                    ? "ISOMORPH sur GitHub (ouvre dans un nouvel onglet)"
+                    : "ISOMORPH on GitHub (opens in new tab)"
+                }
+                style={{ color: "var(--cs-texte-3)" }}
+                className="hover:opacity-100 opacity-70 transition-opacity duration-150"
               >
                 <GitHubIcon />
               </a>
@@ -85,8 +108,13 @@ export default function PiedPageIsomorphDev({ locale = "fr" }: Props) {
                 href="https://www.npmjs.com/~isomorph-agency"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={l === "fr" ? "ISOMORPH sur npm (ouvre dans un nouvel onglet)" : "ISOMORPH on npm (opens in new tab)"}
-                className="opacity-50 hover:opacity-100 focus-visible:opacity-100 transition-opacity duration-150 text-blanc"
+                aria-label={
+                  l === "fr"
+                    ? "ISOMORPH sur npm (ouvre dans un nouvel onglet)"
+                    : "ISOMORPH on npm (opens in new tab)"
+                }
+                style={{ color: "var(--cs-texte-3)" }}
+                className="hover:opacity-100 opacity-70 transition-opacity duration-150"
               >
                 <NpmIcon />
               </a>
@@ -100,7 +128,8 @@ export default function PiedPageIsomorphDev({ locale = "fr" }: Props) {
                 <li key={lien.href}>
                   <Link
                     href={lien.href}
-                    className="type-caption opacity-50 hover:opacity-100 focus-visible:opacity-100 transition-opacity duration-150 text-blanc"
+                    className="type-caption hover:opacity-100 opacity-70 transition-opacity duration-150"
+                    style={{ color: "var(--cs-texte-3)" }}
                   >
                     {lien.libelle}
                   </Link>
@@ -116,7 +145,8 @@ export default function PiedPageIsomorphDev({ locale = "fr" }: Props) {
                 <li key={lien.href}>
                   <Link
                     href={lien.href}
-                    className="type-caption opacity-50 hover:opacity-100 focus-visible:opacity-100 transition-opacity duration-150 text-blanc"
+                    className="type-caption hover:opacity-100 opacity-70 transition-opacity duration-150"
+                    style={{ color: "var(--cs-texte-3)" }}
                   >
                     {lien.libelle}
                   </Link>
@@ -127,12 +157,15 @@ export default function PiedPageIsomorphDev({ locale = "fr" }: Props) {
         </div>
 
         {/* Barre de copyright */}
-        <div className="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-t border-white/10">
-          <p className="type-caption opacity-40 text-blanc">
+        <div
+          className="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2"
+          style={{ borderTop: "1px solid var(--cs-trait)" }}
+        >
+          <p className="type-caption" style={{ color: "var(--cs-texte-3)" }}>
             &copy; {annee} ISOMORPH.{" "}
             {l === "fr" ? "Tous droits réservés." : "All rights reserved."}
           </p>
-          <p className="type-caption opacity-40 text-blanc">
+          <p className="type-caption" style={{ color: "var(--cs-texte-3)" }}>
             {l === "fr" ? "Plugins publiés sous licence MIT." : "Plugins published under MIT license."}
           </p>
         </div>
