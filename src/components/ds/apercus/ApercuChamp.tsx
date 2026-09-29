@@ -18,7 +18,7 @@ export default function ApercuChamp({ fr }: Props) {
           id="apercu-email"
           type="email"
           placeholder={fr ? "nom@domaine.fr" : "name@domain.com"}
-          className="type-body w-full px-4 py-3 border border-[var(--trait)] bg-blanc focus:outline-none focus:border-noir transition-colors duration-150"
+          className="type-body w-full px-4 py-3 border border-[var(--trait)] bg-blanc focus-visible:border-noir transition-colors duration-150"
         />
       </div>
 
@@ -33,7 +33,7 @@ export default function ApercuChamp({ fr }: Props) {
           defaultValue="invalide"
           aria-invalid="true"
           aria-describedby="apercu-msg-erreur"
-          className="type-body w-full px-4 py-3 border border-red-600 bg-blanc focus:outline-none transition-colors duration-150"
+          className="type-body w-full px-4 py-3 border border-red-600 bg-blanc focus-visible:border-red-600 transition-colors duration-150"
         />
         <p id="apercu-msg-erreur" role="alert" className="type-caption text-red-600 mt-1">
           {fr ? "Format d'adresse invalide." : "Invalid email format."}
@@ -49,7 +49,7 @@ export default function ApercuChamp({ fr }: Props) {
           id="apercu-message"
           rows={3}
           placeholder={fr ? "Décrivez votre besoin…" : "Describe your need…"}
-          className="type-body w-full px-4 py-3 border border-[var(--trait)] bg-blanc focus:outline-none focus:border-noir transition-colors duration-150 resize-y"
+          className="type-body w-full px-4 py-3 border border-[var(--trait)] bg-blanc focus-visible:border-noir transition-colors duration-150 resize-y"
         />
       </div>
     </div>

@@ -267,7 +267,7 @@ export const COMPOSANTS: ComposantDS[] = [
     aria-invalid={!!erreur}
     className={[
       "type-body w-full px-4 py-3 border bg-blanc transition-colors duration-150",
-      "focus:outline-none focus:border-noir",
+      "focus-visible:border-noir",
       erreur ? "border-red-600" : "border-[var(--trait)]",
     ].join(" ")}
   />
