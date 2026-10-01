@@ -1,41 +1,48 @@
 /**
- * Aperçu vivant — Lien.
- * Variantes : inline, navigation (type-caption), externe.
+ * Aperçu vivant — liens texte Console (variante « Tension »).
+ *
+ * Les classes csLien/csLienTexte sont injectées par StylesLiens (inclus dans
+ * StylesConsole via fondations.tsx). Server Component.
  */
 
-import Link from "next/link";
+import { StylesConsole } from "@/components/console/fondations";
 
-interface Props { fr: boolean; }
-
-export default function ApercuLien({ fr }: Props) {
+export default function ApercuLien() {
   return (
-    <div className="flex flex-col gap-4">
-      <p className="type-body text-noir max-w-md">
-        {fr
-          ? <>Exemple de <Link href="/fr/plugins" className="underline hover:no-underline focus-visible:no-underline transition-all">lien inline</Link> dans un paragraphe.</>
-          : <>Example of an <Link href="/en/plugins" className="underline hover:no-underline focus-visible:no-underline transition-all">inline link</Link> in a paragraph.</>
-        }
-      </p>
-
-      <Link
-        href="/fr/design-system"
-        className="type-caption text-gris hover:text-noir focus-visible:text-noir transition-colors duration-150"
-      >
-        {fr ? "Lien de navigation" : "Navigation link"}
-      </Link>
-
-      <a
-        href="https://github.com/agenceisomorph"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="type-caption text-gris hover:text-noir focus-visible:text-noir transition-colors duration-150 flex items-center gap-1"
-      >
-        {fr ? "Lien externe" : "External link"}
-        <span className="sr-only">{fr ? "(ouvre dans un nouvel onglet)" : "(opens in new tab)"}</span>
-        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none">
-          <path d="M2 10L10 2M10 2H4M10 2v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
-      </a>
-    </div>
+    <>
+      <StylesConsole />
+      <div className="flex flex-col gap-5">
+        <p className="type-body" style={{ color: "var(--cs-texte-2)" }}>
+          Le plugin{" "}
+          <a href="#" className="csLien csLienTexte" style={{ color: "var(--cs-neon)" }}>
+            Custom Field Link
+          </a>{" "}
+          résout un seul champ pour tous les types de destinations.
+        </p>
+        <div className="flex flex-wrap gap-5">
+          <a
+            href="#"
+            className="csLien type-caption block"
+            style={{ color: "var(--cs-texte-2)" }}
+          >
+            Documentation
+          </a>
+          <a
+            href="#"
+            className="csLien type-caption block"
+            style={{ color: "var(--cs-texte-2)" }}
+          >
+            GitHub
+          </a>
+          <a
+            href="#"
+            className="csLien type-caption block"
+            style={{ color: "var(--cs-texte-2)" }}
+          >
+            npm
+          </a>
+        </div>
+      </div>
+    </>
   );
 }

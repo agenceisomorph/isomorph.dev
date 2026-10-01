@@ -1,37 +1,52 @@
 /**
- * Aperçu vivant — Carte.
- * Carte cliquable et carte statique.
+ * Aperçu vivant — composant Panneau Console (surface de verre).
+ *
+ * Montre les deux variantes (standard et avec flou) et la coupe de coin.
+ * Server Component.
  */
 
-import Link from "next/link";
+import { Panneau, StylesConsole } from "@/components/console/fondations";
 
-interface Props { fr: boolean; }
-
-export default function ApercuCarte({ fr }: Props) {
+export default function ApercuCarte() {
   return (
-    <div className="flex flex-wrap gap-4 w-full">
-      {/* Carte cliquable */}
-      <Link
-        href="/fr/design-system"
-        className="group block w-64 p-6 bg-blanc border border-[var(--trait)] hover:bg-gris-clair focus-visible:bg-gris-clair transition-colors duration-150"
-        aria-label={fr ? "Design system, voir la page" : "Design system, view page"}
-      >
-        <h3 className="type-h3 text-noir mb-2">Design system</h3>
-        <p className="type-body text-gris mb-3">
-          {fr ? "Fondations et composants réutilisables." : "Foundations and reusable components."}
-        </p>
-        <span className="type-caption text-noir group-hover:underline">
-          {fr ? "Voir" : "View"}
-        </span>
-      </Link>
-
-      {/* Carte statique */}
-      <div className="w-64 p-6 bg-blanc border border-[var(--trait)]">
-        <h3 className="type-h3 text-noir mb-2">{fr ? "Carte statique" : "Static card"}</h3>
-        <p className="type-body text-gris">
-          {fr ? "Non cliquable, pas de hover." : "Not clickable, no hover."}
-        </p>
+    <>
+      <StylesConsole />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Panneau coupe="m">
+          <div className="p-5 flex flex-col gap-2">
+            <p className="type-h3" style={{ color: "var(--cs-texte)" }}>
+              Standard
+            </p>
+            <p className="type-body" style={{ color: "var(--cs-texte-2)" }}>
+              Surface de verre, coupe m (16 px).
+            </p>
+          </div>
+        </Panneau>
+        <Panneau coupe="m" flou accent>
+          <div className="p-5 flex flex-col gap-2">
+            <p className="type-h3" style={{ color: "var(--cs-texte)" }}>
+              Avec flou
+            </p>
+            <p className="type-body" style={{ color: "var(--cs-texte-2)" }}>
+              backdrop-blur activé, bord néon accent.
+            </p>
+          </div>
+        </Panneau>
+        <Panneau coupe="s">
+          <div className="p-4">
+            <p className="type-caption" style={{ color: "var(--cs-texte-3)" }}>
+              Coupe s — compacte (10 px), pour les badges et étiquettes.
+            </p>
+          </div>
+        </Panneau>
+        <Panneau coupe="l">
+          <div className="p-5">
+            <p className="type-caption" style={{ color: "var(--cs-texte-3)" }}>
+              Coupe l — grande (22 px), pour les sections héros.
+            </p>
+          </div>
+        </Panneau>
       </div>
-    </div>
+    </>
   );
 }

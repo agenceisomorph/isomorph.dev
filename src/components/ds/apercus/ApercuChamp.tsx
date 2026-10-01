@@ -1,57 +1,42 @@
+"use client";
+
 /**
- * Aperçu vivant — Champ de formulaire.
- * État repos, focus (rendu par le navigateur), erreur.
- * Server Component : les états sont représentés statiquement.
+ * Aperçu vivant — composant Champ Console.
+ *
+ * Client Component justifié : le Champ Console est un composant contrôlé
+ * (valeur + onChange), il nécessite un état local pour la démo.
+ * RGAA 11.1 : libellé visible sur chaque champ.
+ * Règle focus ISOMORPH : le bord change de couleur, aucun ring ni outline.
  */
 
-interface Props { fr: boolean; }
+import { useState } from "react";
+import { Champ } from "@/components/console/formulaires/Champ";
+import { StylesConsole } from "@/components/console/fondations";
 
-export default function ApercuChamp({ fr }: Props) {
+export default function ApercuChamp() {
+  const [email, setEmail] = useState("");
+  const [nom, setNom] = useState("");
+
   return (
-    <div className="flex flex-col gap-6 w-full max-w-sm">
-      {/* Champ normal */}
-      <div>
-        <label htmlFor="apercu-email" className="type-caption text-noir block mb-1">
-          {fr ? "Adresse email" : "Email address"} <span aria-hidden="true">*</span>
-        </label>
-        <input
-          id="apercu-email"
+    <>
+      <StylesConsole />
+      <div className="flex flex-col gap-5 max-w-sm">
+        <Champ
+          libelle="Adresse email"
           type="email"
-          placeholder={fr ? "nom@domaine.fr" : "name@domain.com"}
-          className="type-body w-full px-4 py-3 border border-[var(--trait)] bg-blanc focus-visible:border-noir transition-colors duration-150"
+          placeholder="vous@exemple.fr"
+          valeur={email}
+          onChange={setEmail}
+        />
+        <Champ
+          libelle="Nom"
+          type="text"
+          placeholder="Jean Dupont"
+          valeur={nom}
+          onChange={setNom}
+          erreur={nom.length === 0 ? "Ce champ est obligatoire." : undefined}
         />
       </div>
-
-      {/* Champ en erreur */}
-      <div>
-        <label htmlFor="apercu-email-erreur" className="type-caption text-noir block mb-1">
-          {fr ? "Adresse email (erreur)" : "Email address (error)"}
-        </label>
-        <input
-          id="apercu-email-erreur"
-          type="email"
-          defaultValue="invalide"
-          aria-invalid="true"
-          aria-describedby="apercu-msg-erreur"
-          className="type-body w-full px-4 py-3 border border-red-600 bg-blanc focus-visible:border-red-600 transition-colors duration-150"
-        />
-        <p id="apercu-msg-erreur" role="alert" className="type-caption text-red-600 mt-1">
-          {fr ? "Format d'adresse invalide." : "Invalid email format."}
-        </p>
-      </div>
-
-      {/* Zone de texte */}
-      <div>
-        <label htmlFor="apercu-message" className="type-caption text-noir block mb-1">
-          {fr ? "Message" : "Message"}
-        </label>
-        <textarea
-          id="apercu-message"
-          rows={3}
-          placeholder={fr ? "Décrivez votre besoin…" : "Describe your need…"}
-          className="type-body w-full px-4 py-3 border border-[var(--trait)] bg-blanc focus-visible:border-noir transition-colors duration-150 resize-y"
-        />
-      </div>
-    </div>
+    </>
   );
 }
